@@ -8,7 +8,7 @@ Layout:
 
 Offline Script:
 * [X] Retrieve & Parse Medium Stories.
-* [ ] Analyze & Save Stories.
+* [X] Analyze & Save Stories.
 * [ ] Recommendation Function.
 
 
