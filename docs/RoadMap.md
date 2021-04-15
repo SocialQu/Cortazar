@@ -9,11 +9,11 @@ Layout:
 Offline Script:
 * [X] Retrieve & Parse Medium Stories.
 * [X] Analyze & Save Stories.
-* [ ] Recommendation Function.
+* [X] Recommendation Function.
 
 
 Init Script:
-* [ ] Fetch Tweets & Analyze Tweets.
+* [ ] Fetch & Analyze Tweets.
 * [ ] Fetch & Render Stories.
 * [ ] Sample Tweet Function.
 
