@@ -34,7 +34,7 @@ interface iPost {
 }
 
 
-interface iStory {
+export interface iStory {
     title: string
     subtitle: string
     published: number
@@ -89,5 +89,5 @@ const parseStory = ({ virtuals, ...post }: iPost): iStory => ({
 })
 
 
-const stories = posts.map(p => parseStory(p))
+export const stories = posts.map(p => parseStory(p))
 console.log('stories', stories)
