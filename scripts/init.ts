@@ -63,7 +63,7 @@ export interface iStory {
 const posts = Object.values(data.payload.references.Post)
 // const users = Object.keys(data.payload.references.User)
 
-const parseParagraphs = ({ paragraphs }: iBodyModel) => [...new Set(paragraphs.map(({ text }) => text))].filter(p => p)
+const parseParagraphs = ({ paragraphs }: iBodyModel) => [...new Set(paragraphs.map(({ text }) => text))].filter(p => p && !p.includes('Photo by'))
 
 const parseStory = ({ virtuals, ...post }: iPost): iStory => ({
     title: post.title,
@@ -90,4 +90,4 @@ const parseStory = ({ virtuals, ...post }: iPost): iStory => ({
 
 
 export const stories = posts.map(p => parseStory(p))
-console.log('stories', stories)
+// console.log('stories', stories)
