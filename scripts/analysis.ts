@@ -2,11 +2,15 @@
 
 
 import * as use from '@tensorflow-models/universal-sentence-encoder'
+import { Tensor2D } from '@tensorflow/tfjs-node'
 import * as tf from '@tensorflow/tfjs-node'
-import { Tensor2D } from '@tensorflow/tfjs-node';
 import { PCA } from 'ml-pca'
 
+import { centerStory } from './utils/train'
 import { stories, iStory } from './init'
+
+import { promises as fs } from 'fs'
+
 
 
 const sentences = [
@@ -32,7 +36,7 @@ const demo = () => use.load().then(async model => {
 
 
 
-interface iEmbeddedStory extends iStory {
+export interface iEmbeddedStory extends iStory {
     embeddings: {
         title: number[],
         subtitle: number[],
@@ -42,8 +46,14 @@ interface iEmbeddedStory extends iStory {
     }
 }
 
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+interface iStoryDoc extends Omit<iStory, 'links'> { center: number[] }
+
 const analyzeStories = async() => {
+    console.log('Loading.')
     const model = await use.load()
+    console.log('Loaded.')
+
     const numerize = (embeddings: Tensor2D) => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
         [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
     )
@@ -85,6 +95,28 @@ const analyzeStories = async() => {
 
     const pca = new PCA(Sentences);
     console.log('Dataset:', pca.predict(Sentences, { nComponents:2 }));
+
+    const reducedStory = (story: iEmbeddedStory): iEmbeddedStory => ({
+        ...story,
+        embeddings:{
+            title: pca.predict([story.embeddings.title], {nComponents: 2}).getRow(0),
+            subtitle: pca.predict([story.embeddings.subtitle], {nComponents: 2}).getRow(0),
+            tags: story.embeddings.tags.map((t => pca.predict([t], {nComponents: 2}).getRow(0))),
+            topics: story.embeddings.topics.map((t => pca.predict([t], {nComponents: 2}).getRow(0))),
+            paragraphs: story.embeddings.paragraphs.map((t => pca.predict([t], {nComponents: 2}).getRow(0)))
+        }
+    })
+
+    let centeredStories:iStoryDoc[] = []
+    for (const s of Stories) {
+        const embeddedStory = reducedStory(s)
+        const center = centerStory(embeddedStory)
+
+        const { embeddings, links, ...centeredStory} = embeddedStory
+        centeredStories = [...centeredStories, {...centeredStory, center }]        
+    }
+
+    await fs.writeFile('../data/docs.json', JSON.stringify(centeredStories))
     return
 }
 
