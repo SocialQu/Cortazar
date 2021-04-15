@@ -48,6 +48,8 @@ const analyzeStories = async() => {
         [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
     )
 
+    const findSentences = ({ embeddings: e }: iEmbeddedStory):number[][] => [e.title, e.subtitle, ...e.tags, ...e.topics, ...e.paragraphs] 
+
 
     const embedStory = async(story: iStory): Promise<iEmbeddedStory> => {
         const title = await model.embed(story.title)
@@ -69,8 +71,22 @@ const analyzeStories = async() => {
         }
     }
 
-    const story = await embedStory(stories[0])
-    console.log('Story', story)
+    let Stories:iEmbeddedStory[] = []
+    let Sentences:number[][] = []
+    
+    for (const s of stories) {
+        const story = await embedStory(s)
+        const sentences = findSentences(story)
+
+        Stories = [...Stories, story]
+        Sentences = [...Sentences, ...sentences]
+        console.log(`Analyzed ${story.title}`)
+    }
+
+    const pca = new PCA(Sentences);
+    console.log('Dataset:', pca.predict(Sentences, { nComponents:2 }));
+    return
 }
 
-analyzeStories().then(console.log)
+
+analyzeStories().then()
