@@ -14,7 +14,7 @@ Offline Script:
 
 Init Script:
 * [X] Fetch & Analyze Tweets.
-* [ ] Fetch & Render Stories.
+* [X] Fetch & Render Stories.
 * [ ] Sample Tweet Function.
 
 Launch:
