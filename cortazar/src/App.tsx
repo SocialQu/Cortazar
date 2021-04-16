@@ -1,12 +1,15 @@
-import { App as RealmApp, User, Credentials } from "realm-web"
+import { App as RealmApp, User, Credentials } from 'realm-web'
 import React, { useState, useEffect } from 'react'
 import { NavBar } from './components/NavBar'
 import { Stories } from './components/Grid'
 
 import debugTweets from './data/tweets.json'
+
 import amplitude from 'amplitude-js'
 
 import { analyzeTweets } from './scripts/analysis'
+import { recommend } from './scripts/recommend'
+import { iStory } from './types/stories'
 
 import 'bulma/css/bulma.css'
 import './App.css'
@@ -14,22 +17,24 @@ import './App.css'
 const DEBUG = true
 
 
-const recommendStories = (tweets:string[]) => {}
-
 export const App = () => {
-	const [ stories, setStories ] = useState()
+	const [ stories, setStories ] = useState<iStory[]>()
     const [ oauthToken, setOauthToken ] = useState('')
 
     useEffect(() => {
-        if (DEBUG) {
-			analyzeTweets(debugTweets)
-			recommendStories(debugTweets)
+        const offlineRecommendation = async () => {
+			const center = await analyzeTweets(debugTweets)
+            const bestStories = recommend(center)
+			setStories(bestStories)
+        }
 
-			return
+        if (DEBUG) {
+			offlineRecommendation()
+            return
         }
 
         const connectMongo = async() => {
-            const REALM_APP_ID = "tasktracker-kjrie"
+            const REALM_APP_ID = 'tasktracker-kjrie'
             const app = new RealmApp({ id: REALM_APP_ID })
             const user: User = await app.logIn(Credentials.anonymous())
             return user
@@ -62,8 +67,8 @@ export const App = () => {
 				setStories(stories)
 
 				const mongo = user.mongoClient('myAtlasCluster')
-				const db = mongo.db("Cortazar")
-				const collection = db.collection("users")
+				const db = mongo.db('Cortazar')
+				const collection = db.collection('users')
 				await collection.insertOne({ userId, stories })
 	
 			} catch (e) { console.log('Error Authenticating: ', e) }
@@ -73,8 +78,8 @@ export const App = () => {
             const user = await connectMongo()
 
             const mongo = user.mongoClient('myAtlasCluster')
-            const db = mongo.db("Cortazar")
-            const collection = db.collection("users")
+            const db = mongo.db('Cortazar')
+            const collection = db.collection('users')
 
 			const stories = await collection.findOne({ userId })
 			setStories(stories)
@@ -96,7 +101,7 @@ export const App = () => {
 
 	return <>
 		<NavBar />
-		<div className="section" style={{padding:'1.5rem' }}>
+		<div className='section' style={{padding:'1.5rem' }}>
 			<Stories stories={[]}/>
 		</div>
 	</>
