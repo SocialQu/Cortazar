@@ -119,7 +119,7 @@ const analyzeStories = async() => {
         centeredStories = [...centeredStories, {...centeredStory, center }]        
     }
 
-    await fs.writeFile('../data/docs.json', JSON.stringify(centeredStories))
+    await fs.writeFile('../cortazar/src/data/stories.json', JSON.stringify(centeredStories))
     return
 }
 
