@@ -6,13 +6,14 @@ import { Stories } from './components/Grid'
 import debugTweets from './data/tweets.json'
 import amplitude from 'amplitude-js'
 
+import { analyzeTweets } from './scripts/analysis'
+
 import 'bulma/css/bulma.css'
 import './App.css'
 
 const DEBUG = true
 
 
-const analyzeTweets = (tweets:string[]) => {}
 const recommendStories = (tweets:string[]) => {}
 
 export const App = () => {
