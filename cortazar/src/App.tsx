@@ -68,7 +68,26 @@ export const App = () => {
 			} catch (e) { console.log('Error Authenticating: ', e) }
         }
 
+        const loadUser = async (userId: string) => {
+            const user = await connectMongo()
 
+            const mongo = user.mongoClient('myAtlasCluster')
+            const db = mongo.db("Cortazar")
+            const collection = db.collection("users")
+
+			const stories = await collection.findOne({ userId })
+			setStories(stories)
+        }
+
+
+        const { search } = window.location
+        const hasAuthorization = search && search.includes('oauth_token') && search.includes('oauth_verifier')
+        const userId = window.localStorage.getItem('userId')
+
+
+        if(userId) loadUser(userId)
+        else if(hasAuthorization) initUser(search)
+        else initTwitter()
 
     }, [])
 
