@@ -41,6 +41,35 @@ export const App = () => {
             setOauthToken(oauthToken)
         }
 
+        const initUser = async (search: string) => {
+            try {
+                const user = await connectMongo()
+
+				const tokens = search.replace('?oauth_token=', '').replace('oauth_verifier=', '').split('&')	
+                const [ oauth_token, oauth_verifier ] = tokens
+
+				const initMetricsBody = { oauth_token, oauth_verifier, userId: user.id }
+                const { tweets, userId, userName } = await user.functions.getTweets(initMetricsBody)
+
+                // console.log('Data: ', tweets, userId, userName)
+                window.localStorage.setItem('userId', userId)
+                window.localStorage.setItem('userName', userName)
+
+				analyzeTweets(tweets)
+
+                const { stories } = await user.functions.recommendStories()
+				setStories(stories)
+
+				const mongo = user.mongoClient('myAtlasCluster')
+				const db = mongo.db("Cortazar")
+				const collection = db.collection("users")
+				await collection.insertOne({ userId, stories })
+	
+			} catch (e) { console.log('Error Authenticating: ', e) }
+        }
+
+
+
     }, [])
 
 	return <>
