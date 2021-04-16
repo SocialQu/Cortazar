@@ -1,21 +1,20 @@
 import { App as RealmApp, User, Credentials } from 'realm-web'
 import React, { useState, useEffect } from 'react'
-import { NavBar } from './components/NavBar'
-import { Stories } from './components/Grid'
-
-import debugTweets from './data/tweets.json'
-
 import amplitude from 'amplitude-js'
 
 import { analyzeTweets } from './scripts/analysis'
 import { recommend } from './scripts/recommend'
+import { NavBar } from './components/NavBar'
+import { Stories } from './components/Grid'
+import { Landing } from './views/Landing'
 import { iStory } from './types/stories'
 
+import debugTweets from './data/tweets.json'
 import 'bulma/css/bulma.css'
 import './App.css'
 
-const DEBUG = true
 
+const DEBUG = true
 
 export const App = () => {
 	const [ stories, setStories ] = useState<iStory[]>()
@@ -61,9 +60,8 @@ export const App = () => {
                 window.localStorage.setItem('userId', userId)
                 window.localStorage.setItem('userName', userName)
 
-				analyzeTweets(tweets)
-
-                const { stories } = await user.functions.recommendStories()
+				const center = analyzeTweets(tweets)
+                const { stories } = await user.functions.recommendStories(center)
 				setStories(stories)
 
 				const mongo = user.mongoClient('myAtlasCluster')
@@ -102,7 +100,11 @@ export const App = () => {
 	return <>
 		<NavBar />
 		<div className='section' style={{padding:'1.5rem' }}>
-			<Stories stories={[]}/>
+            {
+                stories
+                ?   <Stories stories={stories}/>
+                :   <Landing />
+            }
 		</div>
 	</>
 }
