@@ -27,6 +27,20 @@ export const App = () => {
 			return
         }
 
+        const connectMongo = async() => {
+            const REALM_APP_ID = "tasktracker-kjrie"
+            const app = new RealmApp({ id: REALM_APP_ID })
+            const user: User = await app.logIn(Credentials.anonymous())
+            return user
+        }
+
+
+        const initTwitter = async() => {
+            const user = await connectMongo()
+            const oauthToken = await user.functions.requestAccess()	
+            setOauthToken(oauthToken)
+        }
+
     }, [])
 
 	return <>
