@@ -19,6 +19,7 @@ const DEBUG = true
 export const App = () => {
 	const [ stories, setStories ] = useState<iStory[]>()
     const [ oauthToken, setOauthToken ] = useState('')
+    const [ user, setUser ] = useState<User>()
 
     useEffect(() => {
         const offlineRecommendation = async () => {
@@ -42,6 +43,8 @@ export const App = () => {
 
         const initTwitter = async() => {
             const user = await connectMongo()
+            setUser(user)
+
             const oauthToken = await user.functions.requestAccess()	
             setOauthToken(oauthToken)
         }
@@ -97,13 +100,23 @@ export const App = () => {
         amplitude.getInstance().logEvent('VISIT_CORTAZAR')
     }, [])
 
+
+    const demo = async(tweet:string) => {
+        if(!user) return
+
+        const center = analyzeTweets([tweet])
+        const { stories } = await user.functions.recommendStories(center)
+        
+        setStories(stories)
+    }
+
 	return <>
 		<NavBar />
 		<div className='section' style={{padding:'1.5rem' }}>
             {
                 stories
                 ?   <Stories stories={stories}/>
-                :   <Landing />
+                :   <Landing demo={demo}/>
             }
 		</div>
 	</>
