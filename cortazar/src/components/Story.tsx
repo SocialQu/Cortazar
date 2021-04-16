@@ -13,8 +13,8 @@ const headerStyle = {
     borderTopRightRadius: 12,
 }
 
-export interface iStory {title:string, subtitle?:string, image?:string, intro?:string, match:number, score:number}
-export const Story = ({ title, subtitle, image, intro, match, score }: iStory) => <div className="card" style={cardStyle}>
+export interface iStoryCard {title:string, subtitle?:string, image?:string, intro?:string, match:number, score:number}
+export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCard) => <div className="card" style={cardStyle}>
     <div className="card-image">
         <figure className="image is-4by3">
             <img src={image} alt="Story image" />
