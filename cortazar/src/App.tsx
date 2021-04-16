@@ -89,6 +89,8 @@ export const App = () => {
         else if(hasAuthorization) initUser(search)
         else initTwitter()
 
+        amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
+        amplitude.getInstance().logEvent('VISIT_CORTAZAR')
     }, [])
 
 	return <>
