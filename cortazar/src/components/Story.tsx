@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 const cardStyle = {
     backgroundColor: 'rgb(48, 48, 48)',
     borderRadius: 12,
@@ -23,7 +25,7 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
             <img 
                 src={`https://cdn-images-1.medium.com/fit/t/800/240/${image}`} 
                 style={{objectFit:'cover', height:256}}
-                alt="Story image" 
+                alt="Story cover" 
             />
         </figure>
 
@@ -81,7 +83,7 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
 
         <a href="" className="card-footer-item" style={{padding:0}}>
             <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
-            <img src={'/send.png'} style={{height:28}}/>
+            <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
         </a>
     </footer>
 </div>
