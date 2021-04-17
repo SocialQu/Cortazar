@@ -2,11 +2,13 @@
 
 ## V.0.1
 
+## Development
 - [ ] Relate Medium IDs to DB IDs.
 - [ ] Construct full image URL.
 
+## First Run
 - [X] SocialQ Logo
-- [ ] BackGround Color
+- [X] BackGround Color
 - [ ] Columns Width
 - [ ] Landing Site Render
 - [ ] Cards Height
