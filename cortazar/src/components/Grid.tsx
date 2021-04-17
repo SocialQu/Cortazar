@@ -4,7 +4,7 @@ import { iStory } from '../types/stories'
 
 
 const Row = ({ stories }: { stories: iStoryCard[] }) => <div className="columns">
-    { stories.map((story) => <div className="column"> <Story {...story} /> </div>) }
+    { stories.map((story) => <div className="column is-one-third"> <Story {...story} /> </div>) }
 </div>
 
 
@@ -49,15 +49,16 @@ export const Stories = ({ stories }: { stories: iStory[] }) => {
 
     return <div className="container"> 
         {
-            stories.reduce((d, i, idx) => 
-                idx % 3 === 0 
+            storyCards.reduce((d, i, idx) => 
+                 idx % 3 === 0
                     ?   [...d, [i]] 
                     :   d.map((e, j, l) => 
-                            j === (l.length - 1) 
-                                ? e 
-                                : [...e, i]
-                        ), [] as iStory[][]
-            ).map(stories => <Row stories={storyCards}/>)
+                            j === (l.length - 1)
+                                ?   [...e, i]
+                                :   e
+                        )
+            , [] as iStoryCard[][])
+            .map(stories => <Row stories={stories}/>)
         }
     </div>
 }
