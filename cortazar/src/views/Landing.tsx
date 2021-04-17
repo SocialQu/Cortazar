@@ -21,11 +21,12 @@ const SearchBox = ({ demo }: { demo(tweet:string):void }) => {
                 value={tweet}
                 className="textarea"
                 onChange={({ target: { value }}) => setTweet(value)}
-                placeholder="Paste a tweet, or write a sentence about something you would like to read..." 
+                placeholder="Paste a tweet, or write a sentence about something you want to read..." 
             />
         </div>
-        <div className="control">
-            <a className="button is-info" onClick={() => demo(tweet)}> Try it Free </a>
+
+        <div className="control" style={{ textAlign:'center', marginTop:'2em' }}>
+            <a className="button is-info" style={{width:560}} onClick={() => demo(tweet)}> Try it Free </a>
         </div>
     </div>
 }
