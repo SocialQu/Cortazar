@@ -1,6 +1,6 @@
 import * as use from '@tensorflow-models/universal-sentence-encoder'
-import { Tensor2D } from '@tensorflow/tfjs-node'
-import * as tf from '@tensorflow/tfjs-node'
+import { Tensor2D } from '@tensorflow/tfjs'
+import * as tf from '@tensorflow/tfjs'
 import pcaModel from './pca.json'
 import { IPCAModel, PCA } from 'ml-pca'
 
