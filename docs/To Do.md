@@ -9,8 +9,12 @@
 ## First Run
 - [X] SocialQ Logo
 - [X] BackGround Color
-- [ ] Columns Width
-- [ ] Landing Site Render
+- [X] Columns Width
+- [X] Landing Site Render
 - [ ] Cards Height
 - [ ] Cards Style
 - [ ] Remove Duplcate Paragraphs
+
+## Style Addons
+- [ ] Connect with Twitter Button
+- [ ] Footer: A product by SocialQ
