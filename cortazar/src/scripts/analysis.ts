@@ -20,7 +20,6 @@ export const analyzeTweets = async(tweets:string[]):Promise<number[]> => {
 
     const numericalEmbeddings = numerize(embeddings)
     const reducedEmbeddings = numericalEmbeddings.map(e => pca.predict([e], {nComponents: 2}).getRow(0))
-    console.log(reducedEmbeddings, 'reducedEmbeddings')
 
     const center = findCenter(reducedEmbeddings)
     return center
