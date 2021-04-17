@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 
-const title = 'Discover the greatest ideas online.'
-const subtitle = `Get personalized reading recommendations based on what you tweet, or what interests you.`
+const title = 'What do you get to read today?'
+const subtitle = `Discover personalized reading recommendations based on what you tweet, or crave.`
 
 const Title = () => <div style={{ margin:'2rem' }}>
     <p className='title is-1 has-text-centered' style={{color:'white'}}> { title } </p>
