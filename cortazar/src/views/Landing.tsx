@@ -1,33 +1,33 @@
 import React, { useState } from 'react'
 
 
-const title = 'What do you get to read today?'
-const subtitle = `Discover personalized reading recommendations based on what you tweet, or crave.`
+const title = 'What do you want to read today?'
 
 const Title = () => <div style={{ margin:'2rem' }}>
     <p className='title is-1 has-text-centered' style={{color:'white'}}> { title } </p>
-    <p className='subtitle is-4 has-text-centered' style={{color:'darkorange' }}> { subtitle } </p>
+    <p className='subtitle is-4 has-text-centered' style={{color:'darkorange' }}> 
+        Discover personalized reading recommendations <br/>
+        based on what you tweet, or crave.
+    </p>
 </div>
 
 
 const SearchBox = ({ demo }: { demo(tweet:string):void }) => {
     const [tweet, setTweet] = useState<string>('')
 
-    return <div className="field has-addons">
-        <div className="control">
-            <input 
-                type="text" 
+    return <div style={{ margin:'5rem' }}>
+        <div className="control" style={{ width:560, margin:'auto' }}>
+            <textarea 
                 value={tweet}
-                className="input" 
+                className="textarea"
                 onChange={({ target: { value }}) => setTweet(value)}
-                placeholder="Paste a tweet, or write a sentence about what you want to read!" 
+                placeholder="Paste a tweet, or write a sentence about something you would like to read..." 
             />
         </div>
-
         <div className="control">
             <a className="button is-info" onClick={() => demo(tweet)}> Try it Free </a>
         </div>
-    </div>    
+    </div>
 }
 
 
