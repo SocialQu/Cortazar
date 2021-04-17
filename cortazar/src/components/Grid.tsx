@@ -4,7 +4,7 @@ import { iStory } from '../types/stories'
 
 
 const Row = ({ stories }: { stories: iStoryCard[] }) => <div className="columns">
-    { stories.map((story) => <div className="column"> <Story {...story} /> </div>) }
+    { stories.map((story, i) => <div className="column" key={i}> <Story {...story}/> </div>) }
 </div>
 
 
@@ -58,7 +58,7 @@ export const Stories = ({ stories }: { stories: iStory[] }) => {
                                 :   e
                         )
             , [] as iStoryCard[][])
-            .map(stories => <Row stories={stories}/>)
+            .map((stories, i) => <Row stories={stories} key={i}/>)
         }
     </div>
 }

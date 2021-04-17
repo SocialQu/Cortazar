@@ -43,7 +43,7 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
                 </p>
 
                 <div className="content" style={{color:'whitesmoke', marginTop:'1rem'}}> 
-                    { intro.map(p => <p>{p}</p> )} 
+                    { intro.map((p, i) => <p key={i}>{p}</p> )} 
                 </div>
             </div>
 
