@@ -4,7 +4,7 @@ import { iStory } from '../types/stories'
 
 
 const Row = ({ stories }: { stories: iStoryCard[] }) => <div className="columns">
-    { stories.map((story) => <div className="column is-one-third"> <Story {...story} /> </div>) }
+    { stories.map((story) => <div className="column"> <Story {...story} /> </div>) }
 </div>
 
 
@@ -38,10 +38,10 @@ export const Stories = ({ stories }: { stories: iStory[] }) => {
             title: s.title,
             subtitle: s.subtitle,
             image: s.imageURL,
-            intro: s.paragraphs.reduce((d, i) => `${d} \n ${i}`, ''),
-            match: 100 - (centerDelta(stories[0], s) - minMatch)*30,
+            intro: s.paragraphs.filter(p => p!== s.title && p !== s.subtitle),
+            match: Math.round(100 + (centerDelta(stories[0], s) - minMatch)*30),
             score: getScore(s, {claps:maxClaps, topics:maxTopics, recommends:maxRecommends, social:maxSocial, responses:maxResponses})
-        }))
+        })).sort(({match: a}, {match: b}) => a < b ? 1 : -1)
 
         setStoryCards(mappedStories)
 
@@ -50,7 +50,7 @@ export const Stories = ({ stories }: { stories: iStory[] }) => {
     return <div className="container"> 
         {
             storyCards.reduce((d, i, idx) => 
-                 idx % 3 === 0
+                 idx % 1 === 0
                     ?   [...d, [i]] 
                     :   d.map((e, j, l) => 
                             j === (l.length - 1)
