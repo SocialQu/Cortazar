@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
+
 import React, { useState } from 'react'
 
-
 const title = 'What do you want to read today?'
-
 const Title = () => <div style={{ margin:'2rem' }}>
     <p className='title is-1 has-text-centered' style={{color:'white'}}> { title } </p>
     <p className='subtitle is-4 has-text-centered' style={{color:'darkorange' }}> 
