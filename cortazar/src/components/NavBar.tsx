@@ -1,6 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { useState } from 'react'
+import { CSSProperties, useState } from 'react'
+
+const authURL = 'https://api.twitter.com/oauth/authenticate?oauth_token'
+
+const TwitterButton = () => <img 
+    alt="Twitter Login Button" 
+    src={'./login-button.png'} 
+    style={{marginRight:12, marginLeft: 12}}
+/>
 
 
 const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a 
@@ -39,6 +47,10 @@ export const NavBar = () => {
             <div className={`navbar-menu ${isActive ? 'is-active navbar-menu-active': ''}`} style={{ maxWidth:1200, marginRight:'auto' }}>
                 <div className={`navbar-end ${isActive ? 'navbar-end-active': ''}`} style={{fontSize: '1.2em'}}>
                     <GumRoad isActive={isActive}/> 
+                </div>
+
+                <div className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}>
+                    <TwitterButton /> 
                 </div>
             </div>
         </div>
