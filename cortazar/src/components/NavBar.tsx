@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { CSSProperties, useState } from 'react'
+import { useState } from 'react'
 
-const authURL = 'https://api.twitter.com/oauth/authenticate?oauth_token'
 
-const TwitterButton = () => <img 
-    alt="Twitter Login Button" 
-    src={'./login-button.png'} 
-    style={{marginRight:12, marginLeft: 12}}
-/>
+const TwitterButton = ({signIn}:{signIn():void}) => <a style={{ height: 28}} onClick={signIn}> 
+    <img alt="Twitter Login Button" src={'./login-button.png'} />
+</a>
 
 
 const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a 
@@ -18,8 +15,7 @@ const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a
     target="_blank"
 > <strong> PRICING </strong> </a>
 
-
-export const NavBar = () => {
+export const NavBar = ({ signIn }:{signIn():void}) => {
     const [ isActive, setActive ] = useState(false)
 
     return <nav className="navbar is-black" role="navigation" aria-label="main navigation">
@@ -50,7 +46,7 @@ export const NavBar = () => {
                 </div>
 
                 <div className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}>
-                    <TwitterButton /> 
+                    <TwitterButton signIn={signIn}/> 
                 </div>
             </div>
         </div>
