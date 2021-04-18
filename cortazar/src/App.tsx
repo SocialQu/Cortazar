@@ -16,13 +16,21 @@ import 'bulma/css/bulma.css'
 import './App.css'
 
 
+const connectMongo = async() => {
+    const REALM_APP_ID = 'tasktracker-kjrie'
+    const app = new RealmApp({ id: REALM_APP_ID })
+    const user: User = await app.logIn(Credentials.anonymous())
+    return user
+}
+
+
 const DEBUG = true
 export const App = () => {
-	const [ stories, setStories ] = useState<iStory[]>()
-    const [ loading, setLoading ] = useState(false)
-    const [ , setOauthToken ] = useState('')
     const [ user, setUser ] = useState<User>()
+    const [ loading, setLoading ] = useState(false)
+
     const [ center, setCenter ] = useState<number[]>()
+	const [ stories, setStories ] = useState<iStory[]>()
 
     useEffect(() => {
         const offlineRecommendation = async () => {
@@ -36,22 +44,6 @@ export const App = () => {
         if (DEBUG) {
 			// offlineRecommendation()
             return
-        }
-
-        const connectMongo = async() => {
-            const REALM_APP_ID = 'tasktracker-kjrie'
-            const app = new RealmApp({ id: REALM_APP_ID })
-            const user: User = await app.logIn(Credentials.anonymous())
-            return user
-        }
-
-
-        const initTwitter = async() => {
-            const user = await connectMongo()
-            setUser(user)
-
-            const oauthToken = await user.functions.requestAccess()	
-            setOauthToken(oauthToken)
         }
 
         const initUser = async (search: string) => {
@@ -103,7 +95,6 @@ export const App = () => {
 
         if(userId) loadUser(userId)
         else if(hasAuthorization) initUser(search)
-        else initTwitter()
 
         amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
         amplitude.getInstance().logEvent('VISIT_CORTAZAR')
@@ -127,10 +118,22 @@ export const App = () => {
         setLoading(false)
     }
 
+    const initTwitter = async() => {
+        const authURL = 'https://api.twitter.com/oauth/authenticate?oauth_token'
+        setLoading(true)
+
+        const user = await connectMongo()
+        setUser(user)
+        console.log('user', user)
+
+        const oauthToken = await user.functions.requestAccess()	
+        window.open(`${authURL}=${oauthToken}`, '_self')
+    }
+
 	return loading
         ?   <Loading />
 		:   <>
-                <NavBar />
+                <NavBar signIn={initTwitter}/>
                 <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
                     {
                         stories && center
