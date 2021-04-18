@@ -5,6 +5,7 @@ import amplitude from 'amplitude-js'
 import { analyzeTweets } from './scripts/analysis'
 import { recommend } from './scripts/recommend'
 import { NavBar } from './components/NavBar'
+import { Footer } from './components/Footer'
 import { Stories } from './components/Grid'
 import { Landing } from './views/Landing'
 import { Loading } from './views/Loading'
@@ -130,12 +131,13 @@ export const App = () => {
         ?   <Loading />
 		:   <>
                 <NavBar />
-                <div className='section' style={{padding:'1.5rem' }}>
+                <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
                     {
                         stories && center
                         ?   <Stories stories={stories} center={center}/>
                         :   <Landing demo={demo}/>
                     }
                 </div>
+                <Footer/>
             </>
 }
