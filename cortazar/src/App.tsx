@@ -7,6 +7,7 @@ import { recommend } from './scripts/recommend'
 import { NavBar } from './components/NavBar'
 import { Stories } from './components/Grid'
 import { Landing } from './views/Landing'
+import { Loading } from './views/Loading'
 import { iStory } from './types/stories'
 
 import debugTweets from './data/tweets.json'
@@ -15,9 +16,9 @@ import './App.css'
 
 
 const DEBUG = true
-
 export const App = () => {
 	const [ stories, setStories ] = useState<iStory[]>()
+    const [ loading, setLoading ] = useState(false)
     const [ , setOauthToken ] = useState('')
     const [ user, setUser ] = useState<User>()
     const [ center, setCenter ] = useState<number[]>()
@@ -109,6 +110,7 @@ export const App = () => {
 
 
     const demo = async(tweet:string) => {
+        setLoading(true)
         const center = await analyzeTweets([tweet])
         setCenter(center)
 
@@ -121,16 +123,19 @@ export const App = () => {
 			setStories(stories)
         }
 
+        setLoading(false)
     }
 
-	return <>
-		<NavBar />
-		<div className='section' style={{padding:'1.5rem' }}>
-            {
-                stories && center
-                ?   <Stories stories={stories} center={center}/>
-                :   <Landing demo={demo}/>
-            }
-		</div>
-	</>
+	return loading
+        ?   <Loading />
+		:   <>
+                <NavBar />
+                <div className='section' style={{padding:'1.5rem' }}>
+                    {
+                        stories && center
+                        ?   <Stories stories={stories} center={center}/>
+                        :   <Landing demo={demo}/>
+                    }
+                </div>
+            </>
 }
