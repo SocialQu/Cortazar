@@ -17,7 +17,7 @@
 
 
 ## Style Addons
-- [ ] Connect with Twitter Button.
+- [X] Connect with Twitter Button.
 - [X] Footer: A product by SocialQ.
 - [ ] Author Name & Twitter Profile.
 - [ ] Reading Time & Date Published.
@@ -42,6 +42,8 @@
 
 
 ## Tests 
+- [ ] DB Models & Architecture.
 - [X] Loading Screen when fetching results.
+- [ ] New Redirect Twitter Function & Token.
 - [ ] Function that Fetches Tweets & saves user on DB.
 - [ ] Function that receives a center and returns the stories.
