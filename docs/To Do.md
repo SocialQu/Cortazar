@@ -18,7 +18,7 @@
 
 ## Style Addons
 - [ ] Connect with Twitter Button.
-- [ ] Footer: A product by SocialQ.
+- [X] Footer: A product by SocialQ.
 - [ ] Author Name & Twitter Profile.
 - [ ] Reading Time & Date Published.
 - [ ] Search Bar on Stories Grid.
@@ -43,3 +43,5 @@
 
 ## Tests 
 - [X] Loading Screen when fetching results.
+- [ ] Function that Fetches Tweets & saves user on DB.
+- [ ] Function that receives a center and returns the stories.
