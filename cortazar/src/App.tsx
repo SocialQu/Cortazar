@@ -18,12 +18,15 @@ const DEBUG = true
 
 export const App = () => {
 	const [ stories, setStories ] = useState<iStory[]>()
-    const [ oauthToken, setOauthToken ] = useState('')
+    const [ , setOauthToken ] = useState('')
     const [ user, setUser ] = useState<User>()
+    const [ center, setCenter ] = useState<number[]>()
 
     useEffect(() => {
         const offlineRecommendation = async () => {
 			const center = await analyzeTweets(debugTweets)
+            setCenter(center)
+
             const bestStories = recommend(center)
 			setStories(bestStories)
         }
@@ -63,7 +66,9 @@ export const App = () => {
                 window.localStorage.setItem('userId', userId)
                 window.localStorage.setItem('userName', userName)
 
-				const center = analyzeTweets(tweets)
+				const center = await analyzeTweets(tweets)
+                setCenter(center)
+
                 const { stories } = await user.functions.recommendStories(center)
 				setStories(stories)
 
@@ -82,8 +87,10 @@ export const App = () => {
             const db = mongo.db('Cortazar')
             const collection = db.collection('users')
 
-			const stories = await collection.findOne({ userId })
-			setStories(stories)
+			const { center, stories } = await collection.findOne({ userId })
+            
+            setCenter(center)
+            setStories(stories)
         }
 
 
@@ -114,8 +121,8 @@ export const App = () => {
 		<NavBar />
 		<div className='section' style={{padding:'1.5rem' }}>
             {
-                stories
-                ?   <Stories stories={stories}/>
+                stories && center
+                ?   <Stories stories={stories} center={center}/>
                 :   <Landing demo={demo}/>
             }
 		</div>
