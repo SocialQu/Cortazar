@@ -3,7 +3,7 @@ export const Footer = () => <footer className="footer" style={{height:80, paddin
         <p style={{color:'white'}}>
             <strong style={{color:'white'}}>Cortazar, </strong> 
             a product by 
-            <a href="https://mobile.twitter.com/SocialQui" style={{color:'skyblue'}}> SocialQui</a>. 
+            <a href="https://twitter.com/SocialQui" style={{color:'skyblue'}}> SocialQui</a>. 
         </p>
     </div>
 </footer>
