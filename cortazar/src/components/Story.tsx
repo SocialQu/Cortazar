@@ -1,5 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import ReactStars from 'react-stars'
+
+
 const cardStyle = {
     backgroundColor: 'rgb(48, 48, 48)',
     borderRadius: 12,
@@ -12,6 +15,15 @@ const headerStyle = {
     backgroundColor: 'rgb(72, 72, 72)',
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
+}
+
+const getStars = (score:number):number => {
+    if(score > 95) return 5
+    if(score > 90) return 4.5
+    if(score > 85) return 4
+    if(score > 80) return 3.5
+    if(score > 75) return 3
+    return 2.5
 }
 
 export interface iStoryCard {title:string, subtitle?:string, image?:string, intro:string[], match:number, score:number}
@@ -46,28 +58,6 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
                     { intro.map((p, i) => <p key={i}>{p}</p> )} 
                 </div>
             </div>
-
-            <nav className="level is-mobile">
-                <div className="level-left">
-                    <a className="level-item">
-                        <span className="icon is-small">
-                            <i className="fas fa-reply"></i>
-                        </span>
-                    </a>
-
-                    <a className="level-item">
-                        <span className="icon is-small">
-                            <i className="fas fa-retweet"></i>
-                        </span>
-                    </a>
-    
-                    <a className="level-item">
-                        <span className="icon is-small">
-                            <i className="fas fa-heart"></i>
-                        </span>
-                    </a>
-                </div>
-            </nav>
          </div>
     </article>    
 
@@ -77,8 +67,8 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
             <span> Match { match }%  </span>
         </p>
 
-        <p className="card-footer-item">
-            <span> Rating { score }% </span>
+        <p className="card-footer-item" style={{padding:0}}>
+            <ReactStars count={5} value={getStars(score)} size={32} color2={'#ffd700'} edit={false}/>
         </p>
 
         <a href="" className="card-footer-item" style={{padding:0}}>
