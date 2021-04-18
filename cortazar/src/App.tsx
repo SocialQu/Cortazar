@@ -32,7 +32,7 @@ export const App = () => {
         }
 
         if (DEBUG) {
-			offlineRecommendation()
+			// offlineRecommendation()
             return
         }
 
@@ -109,12 +109,18 @@ export const App = () => {
 
 
     const demo = async(tweet:string) => {
-        if(!user) return
+        const center = await analyzeTweets([tweet])
+        setCenter(center)
 
-        const center = analyzeTweets([tweet])
-        const { stories } = await user.functions.recommendStories(center)
-        
-        setStories(stories)
+        if(user) {
+            const { stories } = await user.functions.recommendStories(center)
+            setStories(stories)    
+
+        } else {
+            const stories = recommend(center)
+			setStories(stories)
+        }
+
     }
 
 	return <>
