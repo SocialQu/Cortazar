@@ -13,7 +13,7 @@
 - [X] Cards Style.
 - [X] Cards Height.
 - [X] Remove Duplcate Paragraphs.
-- [ ] Fix Rating.
+- [X] Fix Rating.
 
 
 ## Style Addons
@@ -39,3 +39,7 @@
 - [ ] Rate Story.
 - [ ] Modal to Upgrade.
 - [ ] Marked Stories as Read and Shown.
+
+
+## Tests 
+- [X] Loading Screen when fetching results.
