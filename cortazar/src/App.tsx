@@ -130,10 +130,15 @@ export const App = () => {
         window.open(`${authURL}=${oauthToken}`, '_self')
     }
 
+    const goHome = () => {
+        setCenter(undefined)
+        setStories(undefined)
+    }
+
 	return loading
         ?   <Loading />
 		:   <>
-                <NavBar signIn={initTwitter}/>
+                <NavBar signIn={initTwitter} goHome={goHome}/>
                 <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
                     {
                         stories && center
