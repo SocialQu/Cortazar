@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 
-const TwitterButton = ({signIn}:{signIn():void}) => <a style={{ height: 28}} onClick={signIn}> 
+const TwitterButton = ({signIn}:{signIn():void}) => <a style={{ height: 28}} onClick={signIn} hidden> 
     <img alt="Twitter Login Button" src={'./login-button.png'} />
 </a>
 
@@ -46,7 +46,7 @@ export const NavBar = ({ signIn }:{signIn():void}) => {
                 </div>
 
                 <div className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}>
-                    <TwitterButton signIn={signIn}/> 
+                    <TwitterButton signIn={signIn}/>
                 </div>
             </div>
         </div>
