@@ -41,7 +41,7 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
             />
         </figure>
 
-        <div className="media-content">
+        <div className="media-content" style={{paddingBottom:'0.5rem'}}>
             <div className="content">
                 <p 
                     className="subtitle is-5 has-text-white" 
