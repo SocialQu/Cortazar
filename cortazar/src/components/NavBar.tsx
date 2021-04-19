@@ -15,13 +15,15 @@ const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a
     target="_blank"
 > <strong> PRICING </strong> </a>
 
-export const NavBar = ({ signIn }:{signIn():void}) => {
+
+interface iNavBar { signIn():void, goHome():void }
+export const NavBar = ({ signIn, goHome }: iNavBar) => {
     const [ isActive, setActive ] = useState(false)
 
     return <nav className="navbar is-black" role="navigation" aria-label="main navigation">
         <div className="container">
             <div className="navbar-brand">
-                <a className="navbar-item">
+                <a className="navbar-item" onClick={goHome}>
                     <img src="SocialQ.png" style={{ height:36, maxHeight: 'none' }} alt={'SocialQ logo'}/>
                     <p className="navbar-item" style={{ fontSize: '2em', color:'white' }} > SocialQ </p>
                 </a>
