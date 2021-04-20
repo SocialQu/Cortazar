@@ -1,8 +1,8 @@
 # TO DO
 
 ## Development
-- [ ] Relate Medium IDs to DB IDs.
-- [ ] Construct full image URL.
+- [X] Relate Medium IDs to DB IDs.
+- [X] Construct full image URL.
 
 
 ## First Run
@@ -19,8 +19,8 @@
 ## Style Addons
 - [X] Connect with Twitter Button.
 - [X] Footer: A product by SocialQ.
-- [ ] Author Name & Twitter Profile.
-- [ ] Reading Time & Date Published.
+- [X] Author Name & Twitter Profile.
+- [X] Reading Time & Date Published.
 - [ ] Search Bar on Stories Grid.
 
 
@@ -42,8 +42,15 @@
 
 
 ## Tests 
-- [ ] DB Models & Architecture.
+- [X] DB Collections & Architecture.
 - [X] Loading Screen when fetching results.
 - [ ] New Redirect Twitter Function & Token.
 - [ ] Function that Fetches Tweets & saves user on DB.
 - [ ] Function that receives a center and returns the stories.
+
+
+## PreLaunch
+- [ ] Clean Stories Intro.
+- [ ] Show Search on Results.
+- [ ] Enter to Search.
+- [ ] Pricing Update.
