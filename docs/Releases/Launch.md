@@ -7,8 +7,8 @@
 - [X] Author, lenght & Date are stored & retrieved.
 - [X] Links on Stories work.
 
-- [ ] No limits are enforced.
-- [ ] Amplitude Events are Defined & Implemented.
+- [X] No limits are enforced.
+- [X] Amplitude Events are Defined & Implemented.
 - [ ] 100 Stories are Analyzed.
 
 - [ ] Tests are satisfactory.

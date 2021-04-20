@@ -2,6 +2,7 @@
 
 import { iStoryCard } from '../types/stories'
 import ReactStars from 'react-stars'
+import amplitude from 'amplitude-js'
 
 
 const cardStyle = {
@@ -88,7 +89,14 @@ export const Story = (story: iStoryCard) => <div className="card" style={cardSty
             />
         </p>
 
-        <a href={story.link} className="card-footer-item" style={{padding:0}} target="_blank" rel="noreferrer">
+        <a 
+            target="_blank" 
+            rel="noreferrer"
+            href={story.link} 
+            style={{padding:0}} 
+            className="card-footer-item" 
+            onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
+        >
             <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
             <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
         </a>

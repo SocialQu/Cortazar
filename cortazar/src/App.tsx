@@ -11,7 +11,7 @@ import { Landing } from './views/Landing'
 import { Loading } from './views/Loading'
 import { iStory } from './types/stories'
 
-import debugTweets from './data/tweets.json'
+// import debugTweets from './data/tweets.json'
 import 'bulma/css/bulma.css'
 import './App.css'
 
@@ -26,12 +26,13 @@ const connectMongo = async() => {
 
 const DEBUG = true
 export const App = () => {
-    const [ user, setUser ] = useState<User>()
+    const [ , setUser ] = useState<User>()
     const [ loading, setLoading ] = useState(false)
 
     const [ center, setCenter ] = useState<number[]>()
 	const [ stories, setStories ] = useState<iStory[]>()
 
+/*    
     useEffect(() => {
         const offlineRecommendation = async () => {
 			const center = await analyzeTweets(debugTweets)
@@ -99,23 +100,24 @@ export const App = () => {
         amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
         amplitude.getInstance().logEvent('VISIT_CORTAZAR')
     }, [])
+*/
 
+    useEffect(() => {
+        if (DEBUG) return
+        amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
+        amplitude.getInstance().logEvent('VISIT_CORTAZAR')
+    }, [])
 
     const demo = async(tweet:string) => {
         setLoading(true)
         const center = await analyzeTweets([tweet])
         setCenter(center)
 
-        if(user) {
-            const { stories } = await user.functions.recommendStories(center)
-            setStories(stories)    
-
-        } else {
-            const stories = recommend(center)
-			setStories(stories as iStory[])
-        }
+        const stories = recommend(center)
+        setStories(stories as iStory[])
 
         setLoading(false)
+        amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
     }
 
     const initTwitter = async() => {
