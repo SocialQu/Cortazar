@@ -3,6 +3,18 @@
 
 import { iRawStory } from '../../cortazar/src/types/stories'
 
+
+type Collections = {[collection:string]: iCollection}
+type Posts = {[post:string]: iPost}
+type Users = {[user:string]: iUser}
+
+export interface iReferences {
+    Collection: Collections
+    Post: Posts
+    User: Users
+}
+
+
 interface iCollection { 
     slug: string
     domain?: string 
@@ -97,16 +109,6 @@ const parseStory = (post: iPost, references: iReferences):iRawStory => ({
     twitter: references.User[post.creatorId].twitterScreenName || ""
 })
 
-
-type Collections = {[collection:string]: iCollection}
-type Posts = {[post:string]: iPost}
-type Users = {[user:string]: iUser}
-
-interface iReferences {
-    Collection: Collections
-    Post: Posts
-    User: Users
-}
 
 export const parseStories = (references: iReferences):iRawStory[] => {
     const posts = Object.values(references.Post)
