@@ -1,0 +1,8 @@
+# dependencies
+node_modules
+.env
+
+/data
+scripts/tests
+scripts/deprecated
+scripts/utils
