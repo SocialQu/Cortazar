@@ -1,5 +1,5 @@
 # Amplitude Events
 
-- Visit WebSite
-- Search
-- Read Story
+- [X] Visit WebSite
+- [X] Search
+- [X] Read Story
