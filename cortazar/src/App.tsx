@@ -38,7 +38,7 @@ export const App = () => {
             setCenter(center)
 
             const bestStories = recommend(center)
-			setStories(bestStories)
+			setStories(bestStories as iStory[])
         }
 
         if (DEBUG) {
@@ -112,7 +112,7 @@ export const App = () => {
 
         } else {
             const stories = recommend(center)
-			setStories(stories)
+			setStories(stories as iStory[])
         }
 
         setLoading(false)
