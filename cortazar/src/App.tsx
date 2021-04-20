@@ -29,6 +29,7 @@ export const App = () => {
     const [ , setUser ] = useState<User>()
     const [ loading, setLoading ] = useState(false)
 
+    const [ search, setSearch ] = useState('')
     const [ center, setCenter ] = useState<number[]>()
 	const [ stories, setStories ] = useState<iStory[]>()
 
@@ -108,7 +109,10 @@ export const App = () => {
         amplitude.getInstance().logEvent('VISIT_CORTAZAR')
     }, [])
 
+
     const demo = async(tweet:string) => {
+        setSearch(tweet)
+
         setLoading(true)
         const center = await analyzeTweets([tweet])
         setCenter(center)
@@ -144,7 +148,7 @@ export const App = () => {
                 <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
                     {
                         stories && center
-                        ?   <Stories stories={stories} center={center}/>
+                        ?   <Stories stories={stories} center={center} search={search}/>
                         :   <Landing demo={demo}/>
                     }
                 </div>
