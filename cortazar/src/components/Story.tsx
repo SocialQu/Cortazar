@@ -41,7 +41,7 @@ export const Story = (story: iStoryCard) => <div className="card" style={cardSty
             />
         </figure>
 
-        <div className="media-content" style={{paddingBottom:'0.5rem'}}>
+        <div className="media-content" style={{paddingBottom:'0.5rem', paddingRight:'1rem'}}>
             <div className="content">
                 <p 
                     className="subtitle is-5 has-text-white" 
