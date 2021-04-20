@@ -9,7 +9,7 @@
 
 - [X] No limits are enforced.
 - [X] Amplitude Events are Defined & Implemented.
-- [ ] 100 Stories are Analyzed.
+- [X] 100 Stories are Analyzed.
 
 - [ ] Tests are satisfactory.
 - [ ] Continuous Delivery Pipeline Deployed.
