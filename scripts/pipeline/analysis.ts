@@ -7,15 +7,12 @@ import * as tf from '@tensorflow/tfjs-node'
 import { PCA } from 'ml-pca'
 
 import { iRawStory, iStory } from '../../cortazar/src/types/stories'
-
-import { promises as fs } from 'fs'
-
 import startups from '../data/stories/Startups.json'
 import { parseStories } from './parser'
+import { promises as fs } from 'fs'
 
 
 const PCA_ROOT = `../cortazar/src/scripts/pca.json`
-
 
 const findCenter = (vectors: number[][]) =>  vectors.reduce((d, i, _, l) => 
     [d[0] + (i[0]/l.length), d[1] + (i[1]/l.length)]

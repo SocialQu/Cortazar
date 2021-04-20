@@ -6,6 +6,7 @@ import startups from '../data/stories/Startups.json'
 import { centerStories } from './analysis'
 import { parseStories } from './parser'
 import { MongoClient } from 'mongodb'
+import { promises as fs } from 'fs'
 
 
 require('dotenv').config()
@@ -32,8 +33,9 @@ const start = async() => {
 
     const data: iStory[] = await Stories.find().toArray()
     console.log('After Write', data.length)
-    data.map(({ center }) => console.log(center))
-
+    data.map(({ title, center }) => console.log(title, center))
+    
+    await fs.writeFile('../cortazar/src/data/stories.json', JSON.stringify(data))
     client.close()    
 }
 
