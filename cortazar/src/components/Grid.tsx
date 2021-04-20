@@ -22,7 +22,7 @@ const getScore = ({ stats, topics }:iStory, maxScore: iMaxScore) => Math.round((
     + (stats.responses/maxScore.maxResponses || 0)
 )*20)
 
-export const Stories = ({ stories, center }: { stories:iStory[], center:number[] }) => {
+export const Stories = ({ stories, center, search }: { stories:iStory[], center:number[], search:string }) => {
     const [ storyCards, setStoryCards ] = useState<iStoryCard[]>([])
 
     useEffect(() => {
@@ -57,6 +57,11 @@ export const Stories = ({ stories, center }: { stories:iStory[], center:number[]
     }, [stories, center])
 
     return <div className="container"> 
+        <h1 className="subtitle has-text-light"> 
+            Showing search results for: 
+            <i style={{color:'lightskyblue'}}> "{ search }" </i>
+        </h1>
+
         {
             storyCards.reduce((d, i, idx) => 
                  idx % 1 === 0
