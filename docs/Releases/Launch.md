@@ -2,12 +2,15 @@
 
 - [X] Connect to Tweet is delayed.
 - [X] SocialQ button gets back to home.
-- [ ] Stories are served as JSON.
-- [ ] Author, lenght & Date are stored & retrieved.
-- [ ] Links on Stories work.
+
+- [X] Stories are served as JSON.
+- [X] Author, lenght & Date are stored & retrieved.
+- [X] Links on Stories work.
+
 - [ ] No limits are enforced.
-- [ ] 100 Stories are Analyzed.
 - [ ] Amplitude Events are Defined & Implemented.
+- [ ] 100 Stories are Analyzed.
+
 - [ ] Tests are satisfactory.
 - [ ] Continuous Delivery Pipeline Deployed.
 - [ ] Live Tests & Latency are good enough. 
