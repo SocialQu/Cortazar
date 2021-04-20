@@ -51,7 +51,8 @@
 
 ## PreLaunch
 - [X] Clean Stories Intro.
-- [ ] Show Search on Results.
+- [X] Pricing Update.
+- [X] Fix Score
 - [ ] Enter to Search.
-- [ ] Pricing Update.
-- [ ] Fix Score
+- [ ] Show Search on Results.
+- [ ] Tweets Library.
