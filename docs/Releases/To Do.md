@@ -50,7 +50,8 @@
 
 
 ## PreLaunch
-- [ ] Clean Stories Intro.
+- [X] Clean Stories Intro.
 - [ ] Show Search on Results.
 - [ ] Enter to Search.
 - [ ] Pricing Update.
+- [ ] Fix Score

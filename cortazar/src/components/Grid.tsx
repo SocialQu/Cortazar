@@ -7,6 +7,9 @@ const Row = ({ stories }: { stories: iStoryCard[] }) => <div className="columns"
     { stories.map((story, i) => <div className="column" key={i}> <Story {...story}/> </div>) }
 </div>
 
+const cleanIntro = (paragraphs: string[]) => paragraphs
+.filter(p => p.split(' ').length > 6)
+.filter((p, i, l) => p.slice(-1) !== '…' || i === (l.length - 1))
 
 const centerDelta = ((a:number[], {center:b}:iStory) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]))
 
@@ -44,6 +47,7 @@ export const Stories = ({ stories, center }: { stories:iStory[], center:number[]
         const maxMatch = ratedStories.reduce((d, { match })=> d > match ? d : match, 0)
         const mappedStories: iStoryCard[] = ratedStories.map(s => ({
             ...s,
+            intro: cleanIntro(s.intro),
             match: 100 - Math.round((s.match/maxMatch)*30),
             score: s.score/100*30 + 70 
         })).sort(({match: a}, {match: b}) => a > b ? -1 : 1)
