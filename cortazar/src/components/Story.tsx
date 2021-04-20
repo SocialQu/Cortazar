@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import { iStoryCard } from '../types/stories'
 import ReactStars from 'react-stars'
 
 
@@ -26,16 +27,15 @@ const getStars = (score:number):number => {
     return 2.5
 }
 
-export interface iStoryCard {title:string, subtitle?:string, image?:string, intro:string[], match:number, score:number}
-export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCard) => <div className="card" style={cardStyle}>
+export const Story = (story: iStoryCard) => <div className="card" style={cardStyle}>
     <header className="card-header" style={headerStyle}>
-        <p className="card-header-title" style={{color:'white', fontSize:'1.25rem'}}> { title } </p>
+        <p className="card-header-title" style={{color:'white', fontSize:'1.25rem'}}> { story.title } </p>
     </header>
 
     <article className="media" style={{marginBottom:0}}>
         <figure className="media-left" style={{width:'40%', height:256}}>
             <img 
-                src={`https://cdn-images-1.medium.com/fit/t/800/240/${image}`} 
+                src={`https://cdn-images-1.medium.com/fit/t/800/240/${story.image}`} 
                 style={{objectFit:'cover', height:256}}
                 alt="Story cover" 
             />
@@ -46,16 +46,27 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
                 <p 
                     className="subtitle is-5 has-text-white" 
                     style={{fontSize:'1.15rem', marginTop:'0.5rem', marginBottom:'0rem'}}
-                > { subtitle } </p>
+                > { story.subtitle } </p>
 
                 <p>
-                    <a><strong style={{color:'lightskyblue', marginRight:8}}>John Smith </strong></a>
-                    <small style={{color:'lightgrey', marginRight:16}}> 4 min read </small>
-                    <small style={{color:'grey'}}> <i> 27/03/21 </i> </small>
+                    {
+                        story.twitter
+                        ?   <a href={`https://twitter.com/${story.twitter}`} target="_blank" rel="noreferrer">
+                                <strong style={{color:'lightskyblue', marginRight:8}}> { story.author } </strong>
+                            </a>
+                        :   <strong style={{color:'white', marginRight:8}}> { story.author } </strong>
+                    }
+                    
+                    <small style={{color:'lightgrey', marginRight:16}}> 
+                        { Math.round(story.readingTime) } mins 
+                    </small>
+                    <small style={{color:'grey'}}> 
+                        <i>  {`${new Date().getDate()}/${new Date().getMonth()+1}/${new Date().getFullYear()}`} </i> 
+                    </small>
                 </p>
 
                 <div className="content" style={{color:'whitesmoke', marginTop:'1rem'}}> 
-                    { intro.map((p, i) => <p key={i}>{p}</p> )} 
+                    { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
                 </div>
             </div>
          </div>
@@ -64,14 +75,20 @@ export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCar
 
     <footer className="card-footer" style={{color:'white'}}>
         <p className="card-footer-item">
-            <span> Match { match }%  </span>
+            <span> Match { story.match }%  </span>
         </p>
 
         <p className="card-footer-item" style={{padding:0}}>
-            <ReactStars count={5} value={getStars(score)} size={32} color2={'#ffd700'} edit={false}/>
+            <ReactStars 
+                count={5} 
+                size={32} 
+                edit={false}
+                color2={'#ffd700'} 
+                value={getStars(story.score)} 
+            />
         </p>
 
-        <a href="" className="card-footer-item" style={{padding:0}}>
+        <a href={story.link} className="card-footer-item" style={{padding:0}} target="_blank" rel="noreferrer">
             <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
             <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
         </a>
