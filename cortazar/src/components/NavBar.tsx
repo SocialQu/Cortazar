@@ -10,7 +10,7 @@ const TwitterButton = ({signIn}:{signIn():void}) => <a style={{ height: 28}} onC
 
 const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a 
     className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}
-    href="https://gum.co/socialQ" 
+    href="https://gumroad.com/l/cortazar" 
     rel="noopener noreferrer"
     target="_blank"
 > <strong> PRICING </strong> </a>
