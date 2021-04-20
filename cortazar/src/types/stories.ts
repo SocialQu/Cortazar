@@ -18,7 +18,7 @@ export interface iRawStory {
     }
 
     author: string
-    twitter?: string
+    twitter: string
 
     readingTime: number
     published: number
