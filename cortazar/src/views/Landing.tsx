@@ -22,6 +22,7 @@ const SearchBox = ({ demo }: { demo(tweet:string):void }) => {
                 value={tweet}
                 className="textarea"
                 onChange={({ target: { value }}) => setTweet(value)}
+                onKeyPress={({ key }) => key === 'Enter' ? demo(tweet) : null}
                 placeholder="Paste a tweet, or write a sentence about something you want to read..." 
             />
         </div>

@@ -53,6 +53,6 @@
 - [X] Clean Stories Intro.
 - [X] Pricing Update.
 - [X] Fix Score
-- [ ] Enter to Search.
+- [X] Enter to Search.
 - [ ] Show Search on Results.
 - [ ] Tweets Library.
