@@ -2,7 +2,7 @@
 node_modules
 .env
 
-data
+/data
 scripts/tests
 scripts/deprecated
 scripts/utils
