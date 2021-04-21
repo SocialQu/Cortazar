@@ -1,7 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
+import ReactStars from 'react-stars'
+
+
 const cardStyle = {
     backgroundColor: 'rgb(48, 48, 48)',
     borderRadius: 12,
-    maxWidth: 460,
     margin: 'auto',
     marginBottom: '1.5em',
     border: '1px solid white'
@@ -13,32 +17,63 @@ const headerStyle = {
     borderTopRightRadius: 12,
 }
 
-export interface iStoryCard {title:string, subtitle?:string, image?:string, intro?:string, match:number, score:number}
+const getStars = (score:number):number => {
+    if(score > 95) return 5
+    if(score > 90) return 4.5
+    if(score > 85) return 4
+    if(score > 80) return 3.5
+    if(score > 75) return 3
+    return 2.5
+}
+
+export interface iStoryCard {title:string, subtitle?:string, image?:string, intro:string[], match:number, score:number}
 export const Story = ({ title, subtitle, image, intro, match, score }: iStoryCard) => <div className="card" style={cardStyle}>
-    <div className="card-image">
-        <figure className="image is-4by3">
-            <img src={image} alt="Story image" />
-        </figure>
-    </div>
-
-
     <header className="card-header" style={headerStyle}>
-        <p className="card-header-title" style={{color:'white'}}> { title } </p>
+        <p className="card-header-title" style={{color:'white', fontSize:'1.25rem'}}> { title } </p>
     </header>
 
-    <div className="card-content" style={{padding: '0.5rem 1rem'}}>
-        <p className="title is-4"> { title } </p>
-        <p className="subtitle is-6"> { subtitle } </p>
-        <div className="content"> { intro } </div>
-    </div>
+    <article className="media" style={{marginBottom:0}}>
+        <figure className="media-left" style={{width:'40%', height:256}}>
+            <img 
+                src={`https://cdn-images-1.medium.com/fit/t/800/240/${image}`} 
+                style={{objectFit:'cover', height:256}}
+                alt="Story cover" 
+            />
+        </figure>
 
-    <footer className="card-footer">
+        <div className="media-content">
+            <div className="content">
+                <p 
+                    className="subtitle is-5 has-text-white" 
+                    style={{fontSize:'1.15rem', marginTop:'0.5rem', marginBottom:'0rem'}}
+                > { subtitle } </p>
+
+                <p>
+                    <a><strong style={{color:'lightskyblue', marginRight:8}}>John Smith </strong></a>
+                    <small style={{color:'lightgrey', marginRight:16}}> 4 min read </small>
+                    <small style={{color:'grey'}}> <i> 27/03/21 </i> </small>
+                </p>
+
+                <div className="content" style={{color:'whitesmoke', marginTop:'1rem'}}> 
+                    { intro.map((p, i) => <p key={i}>{p}</p> )} 
+                </div>
+            </div>
+         </div>
+    </article>    
+
+
+    <footer className="card-footer" style={{color:'white'}}>
         <p className="card-footer-item">
             <span> Match { match }%  </span>
         </p>
 
-        <p className="card-footer-item">
-            <span> Rating { score }% </span>
+        <p className="card-footer-item" style={{padding:0}}>
+            <ReactStars count={5} value={getStars(score)} size={32} color2={'#ffd700'} edit={false}/>
         </p>
+
+        <a href="" className="card-footer-item" style={{padding:0}}>
+            <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
+            <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
+        </a>
     </footer>
 </div>

@@ -5,8 +5,10 @@ import amplitude from 'amplitude-js'
 import { analyzeTweets } from './scripts/analysis'
 import { recommend } from './scripts/recommend'
 import { NavBar } from './components/NavBar'
+import { Footer } from './components/Footer'
 import { Stories } from './components/Grid'
 import { Landing } from './views/Landing'
+import { Loading } from './views/Loading'
 import { iStory } from './types/stories'
 
 import debugTweets from './data/tweets.json'
@@ -14,39 +16,34 @@ import 'bulma/css/bulma.css'
 import './App.css'
 
 
-const DEBUG = true
+const connectMongo = async() => {
+    const REALM_APP_ID = 'tasktracker-kjrie'
+    const app = new RealmApp({ id: REALM_APP_ID })
+    const user: User = await app.logIn(Credentials.anonymous())
+    return user
+}
 
+
+const DEBUG = true
 export const App = () => {
-	const [ stories, setStories ] = useState<iStory[]>()
-    const [ oauthToken, setOauthToken ] = useState('')
     const [ user, setUser ] = useState<User>()
+    const [ loading, setLoading ] = useState(false)
+
+    const [ center, setCenter ] = useState<number[]>()
+	const [ stories, setStories ] = useState<iStory[]>()
 
     useEffect(() => {
         const offlineRecommendation = async () => {
 			const center = await analyzeTweets(debugTweets)
+            setCenter(center)
+
             const bestStories = recommend(center)
 			setStories(bestStories)
         }
 
         if (DEBUG) {
-			offlineRecommendation()
+			// offlineRecommendation()
             return
-        }
-
-        const connectMongo = async() => {
-            const REALM_APP_ID = 'tasktracker-kjrie'
-            const app = new RealmApp({ id: REALM_APP_ID })
-            const user: User = await app.logIn(Credentials.anonymous())
-            return user
-        }
-
-
-        const initTwitter = async() => {
-            const user = await connectMongo()
-            setUser(user)
-
-            const oauthToken = await user.functions.requestAccess()	
-            setOauthToken(oauthToken)
         }
 
         const initUser = async (search: string) => {
@@ -63,7 +60,9 @@ export const App = () => {
                 window.localStorage.setItem('userId', userId)
                 window.localStorage.setItem('userName', userName)
 
-				const center = analyzeTweets(tweets)
+				const center = await analyzeTweets(tweets)
+                setCenter(center)
+
                 const { stories } = await user.functions.recommendStories(center)
 				setStories(stories)
 
@@ -82,8 +81,10 @@ export const App = () => {
             const db = mongo.db('Cortazar')
             const collection = db.collection('users')
 
-			const stories = await collection.findOne({ userId })
-			setStories(stories)
+			const { center, stories } = await collection.findOne({ userId })
+            
+            setCenter(center)
+            setStories(stories)
         }
 
 
@@ -94,7 +95,6 @@ export const App = () => {
 
         if(userId) loadUser(userId)
         else if(hasAuthorization) initUser(search)
-        else initTwitter()
 
         amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
         amplitude.getInstance().logEvent('VISIT_CORTAZAR')
@@ -102,22 +102,45 @@ export const App = () => {
 
 
     const demo = async(tweet:string) => {
-        if(!user) return
+        setLoading(true)
+        const center = await analyzeTweets([tweet])
+        setCenter(center)
 
-        const center = analyzeTweets([tweet])
-        const { stories } = await user.functions.recommendStories(center)
-        
-        setStories(stories)
+        if(user) {
+            const { stories } = await user.functions.recommendStories(center)
+            setStories(stories)    
+
+        } else {
+            const stories = recommend(center)
+			setStories(stories)
+        }
+
+        setLoading(false)
     }
 
-	return <>
-		<NavBar />
-		<div className='section' style={{padding:'1.5rem' }}>
-            {
-                stories
-                ?   <Stories stories={stories}/>
-                :   <Landing demo={demo}/>
-            }
-		</div>
-	</>
+    const initTwitter = async() => {
+        const authURL = 'https://api.twitter.com/oauth/authenticate?oauth_token'
+        setLoading(true)
+
+        const user = await connectMongo()
+        setUser(user)
+        console.log('user', user)
+
+        const oauthToken = await user.functions.requestAccess()	
+        window.open(`${authURL}=${oauthToken}`, '_self')
+    }
+
+	return loading
+        ?   <Loading />
+		:   <>
+                <NavBar signIn={initTwitter}/>
+                <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
+                    {
+                        stories && center
+                        ?   <Stories stories={stories} center={center}/>
+                        :   <Landing demo={demo}/>
+                    }
+                </div>
+                <Footer/>
+            </>
 }
