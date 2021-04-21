@@ -17,11 +17,11 @@
 
 
 ## Search Filters
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ] Define the filters.
+- [ ] Helper functions in separate directory to Grid Component.
+- [ ] Document additional tests required.
+- [ ] Implement UI & UX.
+- [ ] Style, Ops and Amplitude Events.
 
 
 ## Mobile Friendly
