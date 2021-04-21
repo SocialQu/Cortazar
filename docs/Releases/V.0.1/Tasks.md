@@ -25,11 +25,11 @@
 
 
 ## Mobile Friendly
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ] Landing Site is Responsive.
+- [ ] Mobile Story Card Element.
+- [ ] Handle Search Text and Filters on Mobile.
+- [ ] Run & Debug App.
+- [ ] Test & Release Ops.
 
 
 ## Topics Map
