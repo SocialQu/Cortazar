@@ -33,8 +33,8 @@
 
 
 ## Topics Map
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ] Define queries to group topics. 
+- [ ] Visualize results.
+- [ ] Draft Article.
+- [ ] Strategize Distribution Strategy.
+- [ ] Follow Up Ideas for new Stories.
