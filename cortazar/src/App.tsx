@@ -24,7 +24,7 @@ const connectMongo = async() => {
 }
 
 
-const DEBUG = true
+const DEBUG = false
 export const App = () => {
     const [ , setUser ] = useState<User>()
     const [ loading, setLoading ] = useState(false)
