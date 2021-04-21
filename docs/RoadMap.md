@@ -13,11 +13,11 @@ Offline Script:
 
 
 Init Script:
-* [ ] Fetch & Analyze Tweets.
-* [ ] Fetch & Render Stories.
-* [ ] Sample Tweet Function.
+* [X] Fetch & Analyze Tweets.
+* [X] Fetch & Render Stories.
+* [X] Sample Tweet Function.
 
 Launch:
-* [ ] Landing Site.
-* [ ] GumRoad Page.
+* [X] Landing Site.
 * [ ] Style, Tests & Release.
+* [ ] GumRoad Page.

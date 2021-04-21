@@ -11,6 +11,7 @@ import { stories, iStory } from './init'
 
 import { promises as fs } from 'fs'
 
+const PCA_ROOT = `../cortazar/src/scripts/pca.json`
 
 
 const sentences = [
@@ -94,6 +95,8 @@ const analyzeStories = async() => {
     }
 
     const pca = new PCA(Sentences);
+    await fs.writeFile(PCA_ROOT, JSON.stringify(pca))
+
     console.log('Dataset:', pca.predict(Sentences, { nComponents:2 }));
 
     const reducedStory = (story: iEmbeddedStory): iEmbeddedStory => ({
@@ -116,7 +119,7 @@ const analyzeStories = async() => {
         centeredStories = [...centeredStories, {...centeredStory, center }]        
     }
 
-    await fs.writeFile('../data/docs.json', JSON.stringify(centeredStories))
+    await fs.writeFile('../cortazar/src/data/stories.json', JSON.stringify(centeredStories))
     return
 }
 
