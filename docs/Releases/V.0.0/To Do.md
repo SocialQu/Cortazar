@@ -54,5 +54,5 @@
 - [X] Pricing Update.
 - [X] Fix Score
 - [X] Enter to Search.
-- [ ] Show Search on Results.
+- [X] Show Search on Results.
 - [ ] Tweets Library.
