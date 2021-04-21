@@ -1,6 +1,6 @@
 import * as use from '@tensorflow-models/universal-sentence-encoder'
-import { Tensor2D } from '@tensorflow/tfjs-node'
-import * as tf from '@tensorflow/tfjs-node'
+import { Tensor2D } from '@tensorflow/tfjs'
+import * as tf from '@tensorflow/tfjs'
 import pcaModel from './pca.json'
 import { IPCAModel, PCA } from 'ml-pca'
 
@@ -20,8 +20,8 @@ export const analyzeTweets = async(tweets:string[]):Promise<number[]> => {
 
     const numericalEmbeddings = numerize(embeddings)
     const reducedEmbeddings = numericalEmbeddings.map(e => pca.predict([e], {nComponents: 2}).getRow(0))
-    console.log(reducedEmbeddings, 'reducedEmbeddings')
 
     const center = findCenter(reducedEmbeddings)
+    console.log('center', center)
     return center
 }

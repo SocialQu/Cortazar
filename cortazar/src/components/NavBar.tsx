@@ -3,21 +3,27 @@
 import { useState } from 'react'
 
 
+const TwitterButton = ({signIn}:{signIn():void}) => <a style={{ height: 28}} onClick={signIn} hidden> 
+    <img alt="Twitter Login Button" src={'./login-button.png'} />
+</a>
+
+
 const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a 
     className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}
-    href="https://gum.co/socialQ" 
+    href="https://gumroad.com/l/cortazar" 
     rel="noopener noreferrer"
     target="_blank"
 > <strong> PRICING </strong> </a>
 
 
-export const NavBar = () => {
+interface iNavBar { signIn():void, goHome():void }
+export const NavBar = ({ signIn, goHome }: iNavBar) => {
     const [ isActive, setActive ] = useState(false)
 
     return <nav className="navbar is-black" role="navigation" aria-label="main navigation">
         <div className="container">
             <div className="navbar-brand">
-                <a className="navbar-item">
+                <a className="navbar-item" onClick={goHome}>
                     <img src="SocialQ.png" style={{ height:36, maxHeight: 'none' }} alt={'SocialQ logo'}/>
                     <p className="navbar-item" style={{ fontSize: '2em', color:'white' }} > SocialQ </p>
                 </a>
@@ -39,6 +45,10 @@ export const NavBar = () => {
             <div className={`navbar-menu ${isActive ? 'is-active navbar-menu-active': ''}`} style={{ maxWidth:1200, marginRight:'auto' }}>
                 <div className={`navbar-end ${isActive ? 'navbar-end-active': ''}`} style={{fontSize: '1.2em'}}>
                     <GumRoad isActive={isActive}/> 
+                </div>
+
+                <div className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}>
+                    <TwitterButton signIn={signIn}/>
                 </div>
             </div>
         </div>

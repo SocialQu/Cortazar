@@ -1,18 +1,32 @@
-export interface iStory {
+export interface iRawStory {
+    id: string
+
     title: string
     subtitle: string
-    published: number
-    imageURL: string
-    words: number
-    readingTime: number
-    claps: number
+    intro: string[]
+    image: string
+    link: string
+
     tags:string[]
     topics:string[]
-    paragraphs:string[]
-    recommends: number
-    socialRecommends: number
-    responses: number
-    sections: number
+
+    stats: {
+        claps: number
+        recommends: number
+        socialRecommends: number
+        responses: number
+    }
+
+    author: string
+    twitter: string
+
+    readingTime: number
+    published: number
     curated: number
-    center:number[]
+}
+
+export interface iStory extends iRawStory { center: number[] }
+export interface iStoryCard extends iStory {
+    match: number
+    score: number
 }
