@@ -4,9 +4,10 @@
 import { UniversalSentenceEncoder } from '@tensorflow-models/universal-sentence-encoder'
 import { PCA, IPCAModel } from 'ml-pca'
 
-import { vectorize, findCenter } from '../../cortazar/src/scripts/analysis'
 import { iRawStory, iStory } from '../../cortazar/src/types/stories'
+import { findCenter } from '../../cortazar/src/scripts/analysis'
 import PCA_Model from '../../cortazar/src/scripts/pca.json'
+import { Tensor2D, slice } from '@tensorflow/tfjs-node'
 
 
 interface iEmbeddedStory extends iRawStory {
@@ -20,19 +21,10 @@ interface iEmbeddedStory extends iRawStory {
 }
 
 
-export const centerStory = ({ vectors }: iEmbeddedStory): number[] => {
-    const arrayedStory = [
-        ...[...Array(6)].map(() => vectors.title),
-        ...[...Array(4)].map(() => vectors.subtitle),
+const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
+    [...d, Array.from(slice(embeddings, [idx, 0], [1]).dataSync())], []
+)
 
-        ...[...Array(5)].map(() => vectors.intro),
-        ...[...Array(3)].map(() => vectors.tags),
-        ...[...Array(2)].map(() => vectors.topics)
-    ]
-
-    const center = findCenter(arrayedStory)
-    return center
-}
 
 
 const embedStory = async(story: iRawStory, model: UniversalSentenceEncoder): Promise<iEmbeddedStory> => {
@@ -53,6 +45,21 @@ const embedStory = async(story: iRawStory, model: UniversalSentenceEncoder): Pro
             intro: vectorize(paragraphs)[0]
         }
     }
+}
+
+
+const centerStory = ({ vectors }: iEmbeddedStory): number[] => {
+    const arrayedStory = [
+        ...[...Array(6)].map(() => vectors.title),
+        ...[...Array(4)].map(() => vectors.subtitle),
+
+        ...[...Array(5)].map(() => vectors.intro),
+        ...[...Array(3)].map(() => vectors.tags),
+        ...[...Array(2)].map(() => vectors.topics)
+    ]
+
+    const center = findCenter(arrayedStory)
+    return center
 }
 
 
