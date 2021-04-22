@@ -5,7 +5,9 @@ import pcaModel from './pca.json'
 import { IPCAModel, PCA } from 'ml-pca'
 
 
-const findCenter = (vectors: number[][]) =>  vectors.reduce((d, i, _, l) => [d[0] + (i[0]/l.length), d[1] + (i[1]/l.length)], [0, 0])
+export const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)]
+.map((_, idx) => vectors.reduce((d,i)=> d + i[idx], 0)/vectors.length)
+
 
 export const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
     [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
