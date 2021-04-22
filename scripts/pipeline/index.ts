@@ -2,8 +2,8 @@
 
 import * as use from '@tensorflow-models/universal-sentence-encoder'
 
-import { writeStories } from './retriever'
 import { centerStories } from './analysis'
+import { getStories } from './retriever'
 import { parseStories } from './parser'
 import { saveStories } from './storer'
 
@@ -30,7 +30,7 @@ const pipeline = async(start:number, end:number) => {
     console.log('Connected')
 
     for (const topic of topics) {
-        const rawStories = await writeStories(topic)
+        const rawStories = await getStories(topic)
         await fs.writeFile(`${dir}/${topic}.json`, JSON.stringify(rawStories))
 
         const parsedStories = parseStories(rawStories.payload.references)
