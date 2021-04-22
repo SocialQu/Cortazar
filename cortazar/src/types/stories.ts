@@ -25,7 +25,7 @@ export interface iRawStory {
     curated: number
 }
 
-export interface iStory extends iRawStory { center: number[] }
+export interface iStory extends iRawStory { center:number[], embeddings:number[] }
 export interface iStoryCard extends iStory {
     match: number
     score: number

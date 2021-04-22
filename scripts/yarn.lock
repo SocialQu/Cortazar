@@ -70,7 +70,7 @@
     rimraf "^2.6.2"
     tar "^4.4.6"
 
-"@tensorflow/tfjs@3.4.0", "@tensorflow/tfjs@^3.4.0":
+"@tensorflow/tfjs@3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@tensorflow/tfjs/-/tfjs-3.4.0.tgz#f27a397021124d8294ff73e97185695c3812f295"
   integrity sha512-0iLwMc4Xx6ocdBiTg1JzMN2aIK5qmPniuvi0LXbmps+znyTt75ErqGRRyyOLIMyNsB84tuSSs4efutry6md9yw==
