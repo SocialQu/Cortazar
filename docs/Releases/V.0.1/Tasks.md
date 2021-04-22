@@ -3,7 +3,7 @@
 ## 1000 Stories
 - [X] Command to get 100 Stories at a Time (with options).
 - [X] Do not retrain PCA model, load it instead.
-- [ ] Optimize model size and training sentences.
+- [ ] Optimize PCA model size and training sentences.
 - [X] Research on how to work with directories using Node.
 - [X] Determine how to arrange library of stories.
 
