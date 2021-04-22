@@ -11,7 +11,7 @@
 * Consider other distances? Euclidean.
 
 
-## Implementation Steps
+## Training Implementation
 
 1. [X] Get function to capture all the stories from files.
 2. [X] Analyzed all stories, update the algorithm.
@@ -19,3 +19,11 @@
 4. [ ] MongoDB aggregation pipeline query.
 5. [ ] Absolute Value distance.
 6. [X] Test every story has been updated.
+
+
+## Making a Recommendation
+
+1. [ ] Embed a Tweet with TensorFlow.
+2. [ ] Find the center of the tweet.
+3. [ ] Call the MongoDB Aggregation query.
+4. [ ] Sort top 10 Stories using Absolute Distance.
