@@ -2,11 +2,10 @@
 
 
 import { UniversalSentenceEncoder } from '@tensorflow-models/universal-sentence-encoder'
-import { Tensor2D } from '@tensorflow/tfjs-node'
-import * as tf from '@tensorflow/tfjs-node'
 import { PCA, IPCAModel } from 'ml-pca'
 
 import { iRawStory, iStory } from '../../cortazar/src/types/stories'
+import { vectorize } from '../../cortazar/src/scripts/analysis'
 import PCA_Model from '../../cortazar/src/scripts/pca.json'
 
 
@@ -44,10 +43,6 @@ export const centerStory = ({ embeddings }: iEmbeddedStory): number[] => {
     return center
 }
 
-
-const vectorize = (embeddings: Tensor2D) => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
-    [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
-)
 
 const embedStory = async(story: iRawStory, model: UniversalSentenceEncoder): Promise<iEmbeddedStory> => {
     const title = await model.embed(story.title)

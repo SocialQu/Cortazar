@@ -7,10 +7,9 @@ import { IPCAModel, PCA } from 'ml-pca'
 
 const findCenter = (vectors: number[][]) =>  vectors.reduce((d, i, _, l) => [d[0] + (i[0]/l.length), d[1] + (i[1]/l.length)], [0, 0])
 
-const numerize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
+export const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
     [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
 )
-
 
 export const analyzeTweets = async(tweets:string[]):Promise<number[]> => {
     const model = await use.load()
@@ -18,8 +17,9 @@ export const analyzeTweets = async(tweets:string[]):Promise<number[]> => {
     const embeddings = await model.embed(tweets)
     const pca = PCA.load(pcaModel as IPCAModel)
 
-    const numericalEmbeddings = numerize(embeddings)
+    const numericalEmbeddings = vectorize(embeddings)
     const reducedEmbeddings = numericalEmbeddings.map(e => pca.predict([e], {nComponents: 2}).getRow(0))
+    console.log('reducedEmbeddings', reducedEmbeddings)
 
     const center = findCenter(reducedEmbeddings)
     console.log('center', center)
