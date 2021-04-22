@@ -8,4 +8,13 @@
 * Store in the DB model the compressed embeddings of each story piece.
 * Clusters? Prefilter by clusters.
 * Tags? Additional filters after geoquery sorting.
+* Consider other distances? Euclidean.
 
+
+## Implementation Steps
+
+1. [ ] Get function to capture all the stories from files.
+2. [ ] Analyzed all stories, update the algorithm.
+3. [ ] Update DB documents.
+4. [ ] MongoDB aggregation pipeline query.
+5. [ ] Absolute Value distance.
