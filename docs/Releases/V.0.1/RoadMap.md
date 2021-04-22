@@ -1,6 +1,6 @@
 # RoadMap
 
-- [ ] Wednesday: Start pipeline development.
+- [X] Wednesday: Start pipeline development.
 - [ ] Thursday: Run pipeline, develop recommendation algorithm.
 - [ ] Friday: search filters & start responsiveness.
 - [ ] Saturday: ops & data science of story.

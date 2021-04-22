@@ -1,18 +1,25 @@
 // npx ts-node pipeline/analysis
 
 
-import * as use from '@tensorflow-models/universal-sentence-encoder'
+import { UniversalSentenceEncoder } from '@tensorflow-models/universal-sentence-encoder'
 import { Tensor2D } from '@tensorflow/tfjs-node'
 import * as tf from '@tensorflow/tfjs-node'
-import { PCA } from 'ml-pca'
+import { PCA, IPCAModel } from 'ml-pca'
 
 import { iRawStory, iStory } from '../../cortazar/src/types/stories'
-import startups from '../data/stories/Startups.json'
-import { parseStories } from './parser'
-import { promises as fs } from 'fs'
+import PCA_Model from '../../cortazar/src/scripts/pca.json'
 
 
-const PCA_ROOT = `../cortazar/src/scripts/pca.json`
+interface iEmbeddedStory extends iRawStory {
+    embeddings: {
+        title: number[],
+        subtitle: number[],
+        tags: number[][],
+        topics: number[][],
+        paragraphs: number[][]
+    }
+}
+
 
 const findCenter = (vectors: number[][]) =>  vectors.reduce((d, i, _, l) => 
     [d[0] + (i[0]/l.length), d[1] + (i[1]/l.length)]
@@ -38,25 +45,11 @@ export const centerStory = ({ embeddings }: iEmbeddedStory): number[] => {
 }
 
 
-
-interface iEmbeddedStory extends iRawStory {
-    embeddings: {
-        title: number[],
-        subtitle: number[],
-        tags: number[][],
-        topics: number[][],
-        paragraphs: number[][]
-    }
-}
-
-
 const vectorize = (embeddings: Tensor2D) => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
     [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
 )
 
-const findSentences = ({ embeddings: e }: iEmbeddedStory):number[][] => [e.title, e.subtitle, ...e.tags, ...e.topics, ...e.paragraphs] 
-
-const embedStory = async(story: iRawStory, model: use.UniversalSentenceEncoder): Promise<iEmbeddedStory> => {
+const embedStory = async(story: iRawStory, model: UniversalSentenceEncoder): Promise<iEmbeddedStory> => {
     const title = await model.embed(story.title)
     const subtitle = await model.embed(story.subtitle)
 
@@ -88,23 +81,15 @@ const reducedStory = (story: iEmbeddedStory, pca: PCA): iEmbeddedStory => ({
     }
 })
 
+interface iCenterStories { stories:iRawStory[], model:UniversalSentenceEncoder }
+export const centerStories = async({stories, model}: iCenterStories):Promise<iStory[]> => {
+    const pca = await PCA.load(PCA_Model as IPCAModel);
 
-export const centerStories = async(stories:iRawStory[]):Promise<iStory[]> => {
-    const model = await use.load()
-
-    let Stories:iEmbeddedStory[] = []
-    let Sentences:number[][] = []
-    
+    let Stories:iEmbeddedStory[] = []    
     for (const s of stories) {
         const story = await embedStory(s, model)
-        const sentences = findSentences(story)
-
         Stories = [...Stories, story]
-        Sentences = [...Sentences, ...sentences]
     }
-
-    const pca = new PCA(Sentences);
-    await fs.writeFile(PCA_ROOT, JSON.stringify(pca))
 
     const centeredStories = Stories.map(s => {
         const embeddedStory = reducedStory(s, pca)
@@ -117,12 +102,3 @@ export const centerStories = async(stories:iRawStory[]):Promise<iStory[]> => {
 
     return centeredStories
 }
-
-const test = async() => {
-    const parsedStories = parseStories(startups.payload.references)
-    const stories = await centerStories(parsedStories)
-    return stories    
-}
-
-
-// test().then(stories => stories.map(({ center, title }) => console.log(title, center))).catch(console.log)
