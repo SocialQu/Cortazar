@@ -1,15 +1,15 @@
 import * as use from '@tensorflow-models/universal-sentence-encoder'
 import { Tensor2D } from '@tensorflow/tfjs'
+import { IPCAModel, PCA } from 'ml-pca'
 import * as tf from '@tensorflow/tfjs'
 import pcaModel from './pca.json'
-import { IPCAModel, PCA } from 'ml-pca'
 
 
 export const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)]
 .map((_, idx) => vectors.reduce((d,i)=> d + i[idx], 0)/vectors.length)
 
 
-export const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
+const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
     [...d, Array.from(tf.slice(embeddings, [idx, 0], [1]).dataSync())], []
 )
 
