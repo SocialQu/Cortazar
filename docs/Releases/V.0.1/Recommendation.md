@@ -14,8 +14,8 @@
 ## Implementation Steps
 
 1. [X] Get function to capture all the stories from files.
-2. [ ] Analyzed all stories, update the algorithm.
-3. [ ] Update DB documents.
+2. [X] Analyzed all stories, update the algorithm.
+3. [X] Update DB documents.
 4. [ ] MongoDB aggregation pipeline query.
 5. [ ] Absolute Value distance.
-6. [ ] Test every story has been updated.
+6. [X] Test every story has been updated.
