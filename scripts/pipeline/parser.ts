@@ -64,6 +64,7 @@ const parseIntro = (post: iPost) => {
     const paragraphs = [...post.previewContent.bodyModel.paragraphs, ...post.previewContent2.bodyModel.paragraphs]
     const intro = [...new Set(paragraphs.map(({ text }) => text))].filter(p => p && !p.includes('Photo by'))
     return intro.filter(p => ![post.title.toLowerCase(), post.virtuals.subtitle.toLowerCase()].includes(p.toLowerCase()))
+        .filter(p => p.split(' ').length > 6).filter((p, i, l) => p.slice(-1) !== '…' || i === (l.length - 1))
 }
 
 
@@ -106,7 +107,7 @@ const parseStory = (post: iPost, references: iReferences):iRawStory => ({
     published: post.firstPublishedAt,
 
     author: references.User[post.creatorId].name,
-    twitter: references.User[post.creatorId].twitterScreenName || ""
+    twitter: references.User[post.creatorId].twitterScreenName || ''
 })
 
 
