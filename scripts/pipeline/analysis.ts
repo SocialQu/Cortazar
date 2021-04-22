@@ -4,39 +4,30 @@
 import { UniversalSentenceEncoder } from '@tensorflow-models/universal-sentence-encoder'
 import { PCA, IPCAModel } from 'ml-pca'
 
+import { vectorize, findCenter } from '../../cortazar/src/scripts/analysis'
 import { iRawStory, iStory } from '../../cortazar/src/types/stories'
-import { vectorize } from '../../cortazar/src/scripts/analysis'
 import PCA_Model from '../../cortazar/src/scripts/pca.json'
 
 
 interface iEmbeddedStory extends iRawStory {
-    embeddings: {
-        title: number[],
-        subtitle: number[],
-        tags: number[][],
-        topics: number[][],
-        paragraphs: number[][]
+    vectors: {
+        title: number[]
+        subtitle: number[]
+        tags: number[]
+        topics: number[]
+        intro: number[]
     }
 }
 
 
-const findCenter = (vectors: number[][]) =>  vectors.reduce((d, i, _, l) => 
-    [d[0] + (i[0]/l.length), d[1] + (i[1]/l.length)]
-, [0, 0])
-
-export const centerStory = ({ embeddings }: iEmbeddedStory): number[] => {
-    const paragraphs = findCenter(embeddings.paragraphs)
-    const tags = findCenter(embeddings.tags)
-    const topics = findCenter(embeddings.topics)
-
-
+export const centerStory = ({ vectors }: iEmbeddedStory): number[] => {
     const arrayedStory = [
-        ...[...Array(6)].map(() => embeddings.title),
-        ...[...Array(4)].map(() => embeddings.subtitle),
+        ...[...Array(6)].map(() => vectors.title),
+        ...[...Array(4)].map(() => vectors.subtitle),
 
-        ...[...Array(5)].map(() => paragraphs),
-        ...[...Array(3)].map(() => tags),
-        ...[...Array(2)].map(() => topics)
+        ...[...Array(5)].map(() => vectors.intro),
+        ...[...Array(3)].map(() => vectors.tags),
+        ...[...Array(2)].map(() => vectors.topics)
     ]
 
     const center = findCenter(arrayedStory)
@@ -48,52 +39,35 @@ const embedStory = async(story: iRawStory, model: UniversalSentenceEncoder): Pro
     const title = await model.embed(story.title)
     const subtitle = await model.embed(story.subtitle)
 
-    const tags = await model.embed(story.tags)
-    const topics = await model.embed(story.topics)
-    const paragraphs = await model.embed(story.intro)
+    const tags = await model.embed(story.tags.reduce((d, i) => `${d}, ${i}`, ''))
+    const topics = await model.embed(story.topics.reduce((d, i) => `${d}, ${i}`, ''))
+    const paragraphs = await model.embed(story.intro.reduce((d, i) => `${d} \n ${i}`, ''))
 
     return {
         ...story,
-        embeddings:{
+        vectors:{
             title: vectorize(title)[0],
             subtitle: vectorize(subtitle)[0],
-            tags: vectorize(tags),
-            topics: vectorize(topics),
-            paragraphs: vectorize(paragraphs)
+            tags: vectorize(tags)[0],
+            topics: vectorize(topics)[0],
+            intro: vectorize(paragraphs)[0]
         }
     }
 }
 
 
-const reducedStory = (story: iEmbeddedStory, pca: PCA): iEmbeddedStory => ({
-    ...story,
-    embeddings:{
-        title: pca.predict([story.embeddings.title], {nComponents: 2}).getRow(0),
-        subtitle: pca.predict([story.embeddings.subtitle], {nComponents: 2}).getRow(0),
-        tags: story.embeddings.tags.map((t => pca.predict([t], {nComponents: 2}).getRow(0))),
-        topics: story.embeddings.topics.map((t => pca.predict([t], {nComponents: 2}).getRow(0))),
-        paragraphs: story.embeddings.paragraphs.map((t => pca.predict([t], {nComponents: 2}).getRow(0)))
-    }
-})
-
 interface iCenterStories { stories:iRawStory[], model:UniversalSentenceEncoder }
 export const centerStories = async({stories, model}: iCenterStories):Promise<iStory[]> => {
-    const pca = await PCA.load(PCA_Model as IPCAModel);
+    const pca = PCA.load(PCA_Model as IPCAModel);
 
-    let Stories:iEmbeddedStory[] = []    
+    let Stories:iStory[] = []    
     for (const s of stories) {
-        const story = await embedStory(s, model)
-        Stories = [...Stories, story]
+        const vectorizedStory = await embedStory(s, model)
+        const embeddings = centerStory(vectorizedStory)
+        const center = pca.predict([embeddings], {nComponents:2}).getRow(0)
+
+        Stories = [...Stories, { ...s, embeddings, center }]
     }
 
-    const centeredStories = Stories.map(s => {
-        const embeddedStory = reducedStory(s, pca)
-        const center = centerStory(embeddedStory)
-        
-        const { embeddings, ...story} = embeddedStory
-        const centeredStory = { ...story, center }
-        return centeredStory
-    })
-
-    return centeredStories
+    return Stories
 }
