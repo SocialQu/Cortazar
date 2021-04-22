@@ -12,6 +12,8 @@ export const writeStories = async(topic: string) => {
 
     const { data, status } = await axios.get(url)
     const text = data.replace(lexem, '')
+    const response = JSON.parse(text)
+
     console.log(status, url)
-    return text
+    return response
 }

@@ -29,11 +29,11 @@ const pipeline = async(start:number, end:number) => {
     await client.connect()
     console.log('Connected')
 
-    for (const t of topics) {
-        const rawStories = await writeStories(t)
-        await fs.writeFile(`${dir}/test.json`, rawStories)
+    for (const topic of topics) {
+        const rawStories = await writeStories(topic)
+        await fs.writeFile(`${dir}/${topic}.json`, JSON.stringify(rawStories))
 
-        const parsedStories = parseStories(rawStories)
+        const parsedStories = parseStories(rawStories.payload.references)
         const stories = await centerStories({stories:parsedStories, model})
         await saveStories(stories, client)
     }
@@ -43,4 +43,4 @@ const pipeline = async(start:number, end:number) => {
 }
 
 
-pipeline(20, 21).catch(console.log)
+pipeline(19, 20).catch(console.log)
