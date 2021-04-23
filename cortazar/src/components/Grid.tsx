@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Story } from './Story'
 
 
-const Row = ({ stories }: { stories: iStoryCard[] }) => <div className="columns">
-    { stories.map((story, i) => <div className="column" key={i}> <Story {...story}/> </div>) }
+const Row = ({ stories }: { stories: iStoryCard[] }) => <div className='columns'>
+    { stories.map((story, i) => <div className='column' key={i}> <Story {...story}/> </div>) }
 </div>
 
 const cleanIntro = (paragraphs: string[]) => paragraphs
@@ -56,8 +56,8 @@ export const Stories = ({ stories, center, search }: { stories:iStory[], center:
 
     }, [stories, center])
 
-    return <div className="container"> 
-        <h1 className="subtitle has-text-light"> 
+    return <div className='container'> 
+        <h1 className='subtitle has-text-light'> 
             Showing search results for: 
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
         </h1>

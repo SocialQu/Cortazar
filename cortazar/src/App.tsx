@@ -1,9 +1,8 @@
 import { App as RealmApp, User, Credentials } from 'realm-web'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import amplitude from 'amplitude-js'
 
 import { analyzeTweets } from './scripts/analysis'
-import { recommend } from './scripts/recommend'
 import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
 import { Stories } from './components/Grid'
@@ -24,9 +23,18 @@ const connectMongo = async() => {
 }
 
 
-const DEBUG = false
+const similarity = (center:number[], embedding: number[]) => {
+    if (center.length !== embedding.length) return Infinity
+    const delta = center.reduce((d, i, idx) => d + Math.abs(i - embedding[idx]), 0)
+    return delta
+}
+
+const sleep = (secs:number) => new Promise(resolve => setTimeout(resolve, secs))
+
+
+const DEBUG = process.env.REACT_APP_DEBUG
 export const App = () => {
-    const [ , setUser ] = useState<User>()
+    const [ user, setUser ] = useState<User>()
     const [ loading, setLoading ] = useState(false)
 
     const [ search, setSearch ] = useState('')
@@ -105,23 +113,33 @@ export const App = () => {
 
     useEffect(() => {
         if (DEBUG) return
+
+        connectMongo().then(user => setUser(user))
+
         amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN as string)
         amplitude.getInstance().logEvent('VISIT_CORTAZAR')
     }, [])
 
 
-    const demo = async(tweet:string) => {
+    const demo = async(tweet:string):Promise<void> => {
         setSearch(tweet)
-
         setLoading(true)
-        const center = await analyzeTweets([tweet])
+        amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
+
+        const { vector, center } = await analyzeTweets([tweet])
         setCenter(center)
 
-        const stories = recommend(center)
-        setStories(stories as iStory[])
+        if(!user){
+            await sleep(3)
+            return demo(tweet)
+        }
 
-        setLoading(false)
-        amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
+        const stories:iStory[] = await user.functions.recommend(center)
+        const recommendations = stories.sort(({embeddings:a}, {embeddings:b}) => 
+            similarity(vector, a) > similarity(vector, b) ? 1 : -1
+        )
+
+        setStories(recommendations)
     }
 
     const initTwitter = async() => {
