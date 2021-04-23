@@ -16,4 +16,12 @@
 2. [X] Develop Search Filters Molecule. 
 3. [X] Add Listeners and Events to the Grid.
 4. [X] Handle Grid with 100 Stories.
-5. [ ] Document tests.
+5. [X] Document tests.
+
+## Tests 
+
+* [ ] Styling is good, filters are hidden in mobile.
+* [ ] The first four filters work, results are checked using React Dev Tools.
+* [ ] The unfiltered version is also congruent, at initial useEffect.
+* [ ] Sorting works, and understand if the original stories component is modified as a result.
+* [ ] The hide filters click listener works when clicking on the Grid.
