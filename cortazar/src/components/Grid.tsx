@@ -1,4 +1,5 @@
 import { iStory, iStoryCard } from '../types/stories'
+import { Filters } from '../molecules/Filters'
 import { useEffect, useState } from 'react'
 import { Story } from './Story'
 
@@ -24,6 +25,7 @@ const getScore = ({ stats, topics }:iStory, maxScore: iMaxScore) => Math.round((
 
 export const Stories = ({ stories, center, search }: { stories:iStory[], center:number[], search:string }) => {
     const [ storyCards, setStoryCards ] = useState<iStoryCard[]>([])
+    const [ deactivate, setDeactivate ] = useState(false)
 
     useEffect(() => {
         if(!stories.length) return
@@ -56,11 +58,17 @@ export const Stories = ({ stories, center, search }: { stories:iStory[], center:
 
     }, [stories, center])
 
-    return <div className='container'> 
+    const clickedGrid = () => {
+        setDeactivate(true)
+        setDeactivate(false)
+    }
+
+    return <div className='container' onClick={clickedGrid}> 
         <h1 className='subtitle has-text-light'> 
             Showing search results for: 
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
         </h1>
+        <Filters topics={[]} tags={[]} deactivate={deactivate}/>
 
         {
             storyCards.reduce((d, i, idx) => 

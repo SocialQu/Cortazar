@@ -1,17 +1,17 @@
+import { useState, useEffect } from 'react'
 import { Filter } from '../atoms/Filter'
-import { useState } from 'react'
 
 const readingTimeFilters = ['Short (< 5 minutes)', 'Medium (5 - 10 minutes)', 'Long (> 10 minutes)']
 const ratingFilters = ['3+ Stars', '4+ Stars']
 const sortFilters = ['By Match', 'By Rating', 'By Publish Date']
 
 type Filters = 'Topics' | 'Tags' | 'Rating' | 'Reading Time' | 'Sort' 
-interface iFilters { topics:string[], tags:string[] }
-export const Filters = ({topics, tags}: iFilters) => {
+interface iFilters { topics:string[], tags:string[], deactivate:boolean }
+export const Filters = ({topics, tags, deactivate}: iFilters) => {
     const [active, setActive] = useState<Filters>()
+    useEffect(() => { setActive(undefined) }, [deactivate])
 
     const setFilterActive = (filter:Filters) => setActive(active !== filter ? filter : undefined)
-
     return <div className='columns'>
         <div className='column'>
             <Filter
