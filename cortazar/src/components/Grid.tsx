@@ -9,9 +9,6 @@ const Row = ({ stories }: { stories: iStoryCard[] }) => <div className='columns'
 </div>
 
 const cleanIntro = (paragraphs: string[]) => paragraphs
-.filter(p => p.split(' ').length > 6)
-.filter((p, i, l) => p.slice(-1) !== '…' || i === (l.length - 1))
-
 const centerDelta = ((a:number[], {center:b}:iStory) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]))
 
 interface iMaxScore { maxClaps:number, maxTopics:number, maxRecommends:number, maxSocial:number, maxResponses:number}
@@ -23,24 +20,31 @@ const getScore = ({ stats, topics }:iStory, maxScore: iMaxScore) => Math.round((
     + (stats.responses/maxScore.maxResponses || 0)
 )*20)
 
+
+const computeMaxScore = (stories:iStory[]) => {
+    const stats = stories.map(({ stats }) => stats)
+
+    const maxClaps = stats.reduce((d, {claps: i}) => d > i ? d : i, 0)
+    const maxTopics = stories.reduce((d, {topics: i}) => d > i.length ? d : i.length, 0)
+    const maxRecommends = stats.reduce((d, {recommends: i}) => d > i ? d : i, 0)
+    const maxSocial = stats.reduce((d, {socialRecommends: i}) => d > i ? d : i, 0)
+    const maxResponses = stats.reduce((d, {responses: i}) => d > i ? d : i, 0)
+    const maxScore = { maxClaps, maxTopics, maxRecommends, maxSocial, maxResponses }
+
+    return maxScore    
+}
+
 export const Stories = ({ stories, center, search }: { stories:iStory[], center:number[], search:string }) => {
     const [ storyCards, setStoryCards ] = useState<iStoryCard[]>([])
     const [ deactivate, setDeactivate ] = useState(false)
 
     useEffect(() => {
         if(!stories.length) return
+        if(center.length !== 2) return
 
-        const stats = stories.map(({ stats }) => stats)
-        const maxClaps = stats.reduce((d, {claps: i}) => d > i ? d : i, 0)
-        const maxTopics = stories.reduce((d, {topics: i}) => d > i.length ? d : i.length, 0)
-        const maxRecommends = stats.reduce((d, {recommends: i}) => d > i ? d : i, 0)
-        const maxSocial = stats.reduce((d, {socialRecommends: i}) => d > i ? d : i, 0)
-        const maxResponses = stats.reduce((d, {responses: i}) => d > i ? d : i, 0)
-        const maxScore = { maxClaps, maxTopics, maxRecommends, maxSocial, maxResponses }
-
+        const maxScore = computeMaxScore(stories)
         const ratedStories:iStoryCard[] = stories.map(story => ({
             ...story,
-            intro: story.intro.filter(p => p!== story.title && p !== story.subtitle),
             match: centerDelta(center, story),
             score: getScore(story, maxScore)
         }))
