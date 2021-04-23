@@ -11,9 +11,9 @@
 ## Improved Algorithm
 - [X] Diagram and document the new algorithm.
 - [X] Implement locally the function to rank stories.
-- [ ] Research & evaluate how to test the effectiveness of results => use Amplitude.
-- [ ] Bring Development to the Front End.
-- [ ] Develop & Test Function from Mongo Atlas Function.
+- [X] Research & evaluate how to test the effectiveness of results => use Amplitude.
+- [X] Bring Development to the Front End.
+- [X] Develop & Test Function from Mongo Atlas Function.
 
 
 ## Search Filters
