@@ -13,19 +13,7 @@ const cardStyle = {
     border: '1px solid white'
 }
 
-const headerStyle = {
-    backgroundColor: 'rgb(72, 72, 72)',
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-}
-
-const getStars = (score:number):number => {
-    if(score > 93) return 5
-    if(score > 86) return 4.5
-    if(score > 80) return 4
-    if(score > 74) return 3.5
-    return 3
-}
+const headerStyle = { backgroundColor: 'rgb(72, 72, 72)', borderTopLeftRadius: 12, borderTopRightRadius: 12 }
 
 export const Story = (story: iStoryCard) => <div className='card' style={cardStyle}>
     <header className='card-header' style={headerStyle}>
@@ -72,20 +60,13 @@ export const Story = (story: iStoryCard) => <div className='card' style={cardSty
          </div>
     </article>    
 
-
     <footer className='card-footer' style={{color:'white'}}>
         <p className='card-footer-item'>
             <span> Match { story.match }%  </span>
         </p>
 
         <p className='card-footer-item' style={{padding:0}}>
-            <ReactStars 
-                count={5} 
-                size={32} 
-                edit={false}
-                color2={'#ffd700'} 
-                value={getStars(story.score)} 
-            />
+            <ReactStars count={5} size={32} edit={false} color2={'#ffd700'} value={story.score} />
         </p>
 
         <a 
