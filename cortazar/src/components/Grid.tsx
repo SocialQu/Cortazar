@@ -29,7 +29,7 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
         </h1>
 
-        <Filters topics={[]} tags={[]} deactivate={deactivate}/>
+        <Filters topics={[]} tags={[]} deactivate={deactivate} filterStories={() => {}}/>
         { storyCards.map((story, i) => <Row story={story} key={i}/>) }
     </div>
 }

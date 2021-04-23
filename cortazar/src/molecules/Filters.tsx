@@ -5,9 +5,16 @@ const readingTimeFilters = ['Short (< 5 minutes)', 'Medium (5 - 10 minutes)', 'L
 const ratingFilters = ['3+ Stars', '4+ Stars']
 const sortFilters = ['By Match', 'By Rating', 'By Publish Date']
 
-type Filters = 'Topics' | 'Tags' | 'Rating' | 'Reading Time' | 'Sort' 
-interface iFilters { topics:string[], tags:string[], deactivate:boolean }
-export const Filters = ({topics, tags, deactivate}: iFilters) => {
+export type Filters = 'Topics' | 'Tags' | 'Rating' | 'Reading Time' | 'Sort' 
+interface iFilters { 
+    topics: string[]
+    tags: string[]
+    deactivate:boolean
+    filterStories(filter:Filters, item:string):void 
+}
+
+
+export const Filters = ({topics, tags, deactivate, filterStories}: iFilters) => {
     const [active, setActive] = useState<Filters>()
     useEffect(() => { setActive(undefined) }, [deactivate])
 
@@ -19,7 +26,7 @@ export const Filters = ({topics, tags, deactivate}: iFilters) => {
                 isActive={active==='Topics'}
                 setActive={() =>  setFilterActive('Topics')}
                 filters={topics}
-                select={() => {}}
+                select={topic => filterStories('Topics', topic)}
             />
         </div>
 
@@ -29,7 +36,7 @@ export const Filters = ({topics, tags, deactivate}: iFilters) => {
                 isActive={active==='Tags'}
                 setActive={() => setFilterActive('Tags')}
                 filters={tags}
-                select={() => {}}
+                select={tag => filterStories('Tags', tag)}
             />
         </div>
 
@@ -39,7 +46,7 @@ export const Filters = ({topics, tags, deactivate}: iFilters) => {
                 isActive={active==='Rating'}
                 setActive={() => setFilterActive('Rating')}
                 filters={ratingFilters}
-                select={() => {}}
+                select={rating => filterStories('Rating', rating)}
             />
         </div>
 
@@ -49,7 +56,7 @@ export const Filters = ({topics, tags, deactivate}: iFilters) => {
                 isActive={active==='Reading Time'}
                 setActive={() => setFilterActive('Reading Time')}
                 filters={readingTimeFilters}
-                select={() => {}}
+                select={time => filterStories('Reading Time', time)}
             />
         </div>
 
@@ -59,7 +66,7 @@ export const Filters = ({topics, tags, deactivate}: iFilters) => {
                 isActive={active==='Sort'}
                 setActive={() => setFilterActive('Sort')}
                 filters={sortFilters}
-                select={() => {}}
+                select={sorting => filterStories('Sort', sorting)}
             />
         </div>
     </div>
