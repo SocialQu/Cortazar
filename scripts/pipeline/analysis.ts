@@ -21,7 +21,7 @@ interface iEmbeddedStory extends iRawStory {
 }
 
 
-const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
+export const vectorize = (embeddings: Tensor2D):number[][] => [...Array(embeddings.shape[0])].reduce((d, i, idx) => 
     [...d, Array.from(slice(embeddings, [idx, 0], [1]).dataSync())], []
 )
 
@@ -65,7 +65,7 @@ const centerStory = ({ vectors }: iEmbeddedStory): number[] => {
 
 interface iCenterStories { stories:iRawStory[], model:UniversalSentenceEncoder }
 export const centerStories = async({stories, model}: iCenterStories):Promise<iStory[]> => {
-    const pca = PCA.load(PCA_Model as IPCAModel);
+    const pca = PCA.load(PCA_Model as IPCAModel)
 
     let Stories:iStory[] = []    
     for (const s of stories) {
