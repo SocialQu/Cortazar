@@ -2,7 +2,6 @@ import { Filters } from "../molecules/Filters"
 import { iStoryCard } from "../types/stories"
 
 
-
 const topicFilters = (item:string, stories:iStoryCard[]) => stories.filter(({ topics }) => topics.includes(item))
 const tagFilters = (item:string, stories:iStoryCard[]) => stories.filter(({ tags }) => tags.includes(item))
 
@@ -21,7 +20,11 @@ const ratingFilters = (item:string, stories:iStoryCard[]) => {
 }
 
 
-const sortStories = (item:string, stories:iStoryCard[]) => {}
+const sortStories = (item:string, stories:iStoryCard[]) => {
+    if(item === 'By Rating') return stories.sort(({score:a}, {score:b})=> a > b ? 1 : -1)
+    if(item === 'By Publish Date') return stories.sort(({published:a}, {published:b})=> a > b ? 1 : -1)
+    return stories.sort(({match:a}, {match:b})=> a > b ? 1 : -1)
+}
 
 export const filterStories = (filter:Filters, item:string, stories:iStoryCard[]) => {
     if(filter === 'Topics') return topicFilters(item, stories)
@@ -29,4 +32,5 @@ export const filterStories = (filter:Filters, item:string, stories:iStoryCard[])
     if(filter === 'Reading Time') return readingTimeFilters(item, stories)
     if(filter === 'Rating') return ratingFilters(item, stories)
     if(filter === 'Sort') return sortStories(item, stories)
+    return stories
 }
