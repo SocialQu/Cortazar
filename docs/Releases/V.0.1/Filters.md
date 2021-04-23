@@ -14,6 +14,6 @@
 
 1. [X] Design Dropdown Atom.
 2. [X] Develop Search Filters Molecule. 
-3. [ ] Add Listeners and Events to the Grid.
-4. [ ] Handle Grid with 100 Stories.
+3. [X] Add Listeners and Events to the Grid.
+4. [X] Handle Grid with 100 Stories.
 5. [ ] Document tests.
