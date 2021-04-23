@@ -5,7 +5,7 @@ import * as tf from '@tensorflow/tfjs'
 import pcaModel from './pca.json'
 
 
-export const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)]
+const findCenter = (vectors: number[][]) => [...Array(vectors[0].length)]
 .map((_, idx) => vectors.reduce((d,i)=> d + i[idx], 0)/vectors.length)
 
 
