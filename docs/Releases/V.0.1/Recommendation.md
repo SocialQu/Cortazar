@@ -9,6 +9,7 @@
 * Clusters? Prefilter by clusters.
 * Tags? Additional filters after geoquery sorting.
 * Consider other distances? Euclidean.
+* Multiple centers? based on the query type? Use this in conjuction to clustering the initial query. This adds visualization possibilities.
 
 
 ## Training Implementation
