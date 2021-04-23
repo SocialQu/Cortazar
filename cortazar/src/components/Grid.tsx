@@ -1,5 +1,5 @@
 import { iStory, iStoryCard } from '../types/stories'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Story } from './Story'
 
 

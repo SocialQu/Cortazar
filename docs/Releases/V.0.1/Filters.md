@@ -12,7 +12,7 @@
 
 ## Implementation
 
-1. [ ] Design Dropdown Atom.
+1. [X] Design Dropdown Atom.
 2. [ ] Develop Search Filters Molecule. 
 3. [ ] Add Listeners and Events to the Grid.
 4. [ ] Handle Grid with 100 Stories.
