@@ -23,7 +23,7 @@
 
 ## Making a Recommendation
 
-1. [ ] Embed a Tweet with TensorFlow.
-2. [ ] Find the center of the tweet.
+1. [X] Embed a Tweet with TensorFlow.
+2. [X] Find the center of the tweet.
 3. [ ] Call the MongoDB Aggregation query.
 4. [ ] Sort top 10 Stories using Absolute Distance.
