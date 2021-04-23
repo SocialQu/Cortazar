@@ -17,18 +17,18 @@ const SearchBox = ({ demo }: { demo(tweet:string):void }) => {
     const [tweet, setTweet] = useState<string>('')
 
     return <div style={{ margin:'5rem' }}>
-        <div className="control" style={{ width:560, margin:'auto' }}>
+        <div className='control' style={{ width:560, margin:'auto' }}>
             <textarea 
                 value={tweet}
-                className="textarea"
+                className='textarea'
                 onChange={({ target: { value }}) => setTweet(value)}
                 onKeyPress={({ key }) => key === 'Enter' ? demo(tweet) : null}
-                placeholder="Paste a tweet, or write a sentence about something you want to read..." 
+                placeholder='Paste a tweet, or write a sentence about something you want to read...' 
             />
         </div>
 
-        <div className="control" style={{ textAlign:'center', marginTop:'2em' }}>
-            <a className="button is-info" style={{width:560}} onClick={() => demo(tweet)}> Try it Free </a>
+        <div className='control' style={{ textAlign:'center', marginTop:'2em' }}>
+            <a className='button is-info' style={{width:560}} onClick={() => demo(tweet)}> Try it Free </a>
         </div>
     </div>
 }
