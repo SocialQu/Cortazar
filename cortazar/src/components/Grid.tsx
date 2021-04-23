@@ -19,14 +19,18 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
 
     useEffect(() => { setStoryCards(stories) }, [stories])
 
-    const handleFilters = (filter:Filters, item:string) => setStoryCards(filterStories(filter, item, stories))
+    const handleFilters = (filter:Filters, item:string) => {
+        const filteredStories = filterStories(filter, item, stories)
+        setStoryCards(filteredStories)
+        hideFilters()
+    }
 
-    const clickedGrid = () => {
+    const hideFilters = () => {
         setDeactivate(true)
         setDeactivate(false)
     }
 
-    return <div className='container' onClick={clickedGrid}> 
+    return <div className='container' onClick={hideFilters}> 
         <h1 className='subtitle has-text-light'> 
             Showing search results for: 
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
