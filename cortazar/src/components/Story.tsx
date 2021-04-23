@@ -27,31 +27,31 @@ const getStars = (score:number):number => {
     return 3
 }
 
-export const Story = (story: iStoryCard) => <div className="card" style={cardStyle}>
-    <header className="card-header" style={headerStyle}>
-        <p className="card-header-title" style={{color:'white', fontSize:'1.25rem'}}> { story.title } </p>
+export const Story = (story: iStoryCard) => <div className='card' style={cardStyle}>
+    <header className='card-header' style={headerStyle}>
+        <p className='card-header-title' style={{color:'white', fontSize:'1.25rem'}}> { story.title } </p>
     </header>
 
-    <article className="media" style={{marginBottom:0}}>
-        <figure className="media-left" style={{width:'40%', height:256}}>
+    <article className='media' style={{marginBottom:0}}>
+        <figure className='media-left' style={{width:'40%', height:256}}>
             <img 
                 src={`https://cdn-images-1.medium.com/fit/t/800/240/${story.image}`} 
                 style={{objectFit:'cover', height:256}}
-                alt="Story cover" 
+                alt='Story cover' 
             />
         </figure>
 
-        <div className="media-content" style={{paddingBottom:'0.5rem', paddingRight:'1rem'}}>
-            <div className="content">
+        <div className='media-content' style={{paddingBottom:'0.5rem', paddingRight:'1rem'}}>
+            <div className='content'>
                 <p 
-                    className="subtitle is-5 has-text-white" 
+                    className='subtitle is-5 has-text-white' 
                     style={{fontSize:'1.15rem', marginTop:'0.5rem', marginBottom:'0rem'}}
                 > { story.subtitle } </p>
 
                 <p>
                     {
                         story.twitter
-                        ?   <a href={`https://twitter.com/${story.twitter}`} target="_blank" rel="noreferrer">
+                        ?   <a href={`https://twitter.com/${story.twitter}`} target='_blank' rel='noreferrer'>
                                 <strong style={{color:'lightskyblue', marginRight:8}}> { story.author } </strong>
                             </a>
                         :   <strong style={{color:'white', marginRight:8}}> { story.author } </strong>
@@ -65,7 +65,7 @@ export const Story = (story: iStoryCard) => <div className="card" style={cardSty
                     </small>
                 </p>
 
-                <div className="content" style={{color:'whitesmoke', marginTop:'1rem'}}> 
+                <div className='content' style={{color:'whitesmoke', marginTop:'1rem'}}> 
                     { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
                 </div>
             </div>
@@ -73,12 +73,12 @@ export const Story = (story: iStoryCard) => <div className="card" style={cardSty
     </article>    
 
 
-    <footer className="card-footer" style={{color:'white'}}>
-        <p className="card-footer-item">
+    <footer className='card-footer' style={{color:'white'}}>
+        <p className='card-footer-item'>
             <span> Match { story.match }%  </span>
         </p>
 
-        <p className="card-footer-item" style={{padding:0}}>
+        <p className='card-footer-item' style={{padding:0}}>
             <ReactStars 
                 count={5} 
                 size={32} 
@@ -89,11 +89,11 @@ export const Story = (story: iStoryCard) => <div className="card" style={cardSty
         </p>
 
         <a 
-            target="_blank" 
-            rel="noreferrer"
+            target='_blank' 
+            rel='noreferrer'
             href={story.link} 
             style={{padding:0}} 
-            className="card-footer-item" 
+            className='card-footer-item' 
             onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
         >
             <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
