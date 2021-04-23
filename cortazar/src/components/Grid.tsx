@@ -1,3 +1,4 @@
+import { filterStories } from '../scripts/filters'
 import { Filters } from '../molecules/Filters'
 import { iStoryCard } from '../types/stories'
 import { useEffect, useState } from 'react'
@@ -18,6 +19,8 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
 
     useEffect(() => { setStoryCards(stories) }, [stories])
 
+    const handleFilters = (filter:Filters, item:string) => setStoryCards(filterStories(filter, item, stories))
+
     const clickedGrid = () => {
         setDeactivate(true)
         setDeactivate(false)
@@ -29,7 +32,7 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
         </h1>
 
-        <Filters topics={[]} tags={[]} deactivate={deactivate} filterStories={() => {}}/>
-        { storyCards.map((story, i) => <Row story={story} key={i}/>) }
+        <Filters topics={[]} tags={[]} deactivate={deactivate} filterStories={handleFilters}/>
+        { storyCards.filter((_, i) => i < 10).map((story, i) => <Row story={story} key={i}/>) }
     </div>
 }
