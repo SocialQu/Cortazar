@@ -2,7 +2,7 @@ import * as use from '@tensorflow-models/universal-sentence-encoder'
 import { Tensor2D } from '@tensorflow/tfjs'
 import { slice } from '@tensorflow/tfjs'
 import { IPCAModel, PCA } from 'ml-pca'
-import pcaModel from './pca.json'
+import pcaModel from '../data/pca.json'
 
 
 
