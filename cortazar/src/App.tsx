@@ -13,6 +13,7 @@ import { iStory } from './types/stories'
 // import debugTweets from './data/tweets.json'
 import 'bulma/css/bulma.css'
 import './App.css'
+import { recommend } from './scripts/recommend'
 
 
 const connectMongo = async() => {
@@ -22,12 +23,6 @@ const connectMongo = async() => {
     return user
 }
 
-
-const similarity = (center:number[], embedding: number[]) => {
-    if (center.length !== embedding.length) return Infinity
-    const delta = center.reduce((d, i, idx) => d + Math.abs(i - embedding[idx]), 0)
-    return delta
-}
 
 const sleep = (secs:number) => new Promise(resolve => setTimeout(resolve, secs))
 
@@ -135,10 +130,7 @@ export const App = () => {
         }
 
         const stories:iStory[] = await user.functions.recommend(center)
-        const recommendations = stories.sort(({embeddings:a}, {embeddings:b}) => 
-            similarity(vector, a) > similarity(vector, b) ? 1 : -1
-        )
-
+        const recommendations = recommend(stories, vector)
         setStories(recommendations)
     }
 
