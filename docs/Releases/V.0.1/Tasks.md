@@ -19,16 +19,16 @@
 ## Search Filters
 - [X] Define the filters.
 - [X] Helper functions in separate directory to Grid Component.
-- [ ] Document additional tests required.
+- [X] Document additional tests required.
 - [X] Implement UI & UX.
 - [ ] Style, Ops and Amplitude Events.
 
 
 ## Mobile Friendly
-- [ ] Landing Site is Responsive.
 - [ ] Mobile Story Card Element.
-- [ ] Handle Search Text and Filters on Mobile.
 - [ ] Run & Debug App.
+- [ ] Handle Search Text and Filters on Mobile.
+- [ ] Landing Site is Responsive.
 - [ ] Test & Release Ops.
 
 
