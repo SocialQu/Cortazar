@@ -16,8 +16,8 @@
 1. [X] Get function to capture all the stories from files.
 2. [X] Analyzed all stories, update the algorithm.
 3. [X] Update DB documents.
-4. [ ] MongoDB aggregation pipeline query.
-5. [ ] Absolute Value distance.
+4. [X] MongoDB aggregation pipeline query.
+5. [X] Absolute Value distance.
 6. [X] Test every story has been updated.
 
 
@@ -26,4 +26,4 @@
 1. [X] Embed a Tweet with TensorFlow.
 2. [X] Find the center of the tweet.
 3. [X] Call the MongoDB Aggregation query.
-4. [ ] Sort top 10 Stories using Absolute Distance.
+4. [X] Sort top 10 Stories using Absolute Distance.
