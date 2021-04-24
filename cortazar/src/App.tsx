@@ -51,6 +51,8 @@ export const App = () => {
 
 
     const demo = async(tweet:string):Promise<void> => {
+        if(DEBUG) return 
+
         setSearch(tweet)
         setLoading(true)
         amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
@@ -89,7 +91,7 @@ export const App = () => {
         ?   <Loading />
 		:   <>
                 <NavBar signIn={initTwitter} goHome={goHome}/>
-                <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
+                <div className='section' style={{minHeight:'calc(100vh - 180px)'}}>
                     {
                         stories && center
                         ?   <Stories stories={stories} search={search}/>
