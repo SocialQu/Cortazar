@@ -5,7 +5,7 @@ import { UniversalSentenceEncoder } from '@tensorflow-models/universal-sentence-
 import { PCA, IPCAModel } from 'ml-pca'
 
 import { iRawStory, iStory } from '../../cortazar/src/types/stories'
-import PCA_Model from '../../cortazar/src/scripts/pca.json'
+import PCA_Model from '../../cortazar/src/data/pca.json'
 import { Tensor2D, slice } from '@tensorflow/tfjs-node'
 
 
