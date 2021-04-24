@@ -15,10 +15,77 @@ const cardStyle = {
 
 const headerStyle = { backgroundColor: 'rgb(72, 72, 72)', borderTopLeftRadius: 12, borderTopRightRadius: 12 }
 
+
+const StoryTitle = ({ title }: iStoryCard) => <header className='card-header' style={headerStyle}>
+    <p className='card-header-title' style={{color:'white', fontSize:'1.25rem'}}> { title } </p>
+</header>
+
+
+const StoryInfo = ({ twitter, author, readingTime, published }: iStoryCard) => <p>
+    {
+        twitter
+        ?   <a href={`https://twitter.com/${twitter}`} target='_blank' rel='noreferrer'>
+                <strong style={{color:'lightskyblue', marginRight:8}}> { author } </strong>
+            </a>
+        :   <strong style={{color:'white', marginRight:8}}> { author } </strong>
+    }
+
+    <small style={{color:'lightgrey', marginRight:16}}> 
+        { Math.round(readingTime) } mins 
+    </small>
+    <small style={{color:'grey'}}> 
+        <i>  {`${new Date(published).getDate()}/${new Date(published).getMonth()+1}/${new Date(published).getFullYear()}`} </i> 
+    </small>
+</p>
+
+
+const StoryFooter = (story: iStoryCard) => <footer className='card-footer' style={{color:'white'}}>
+    <p className='card-footer-item'>
+        <span> Match { story.match }%  </span>
+    </p>
+
+    <p className='card-footer-item' style={{padding:0}}>
+        <ReactStars count={5} size={32} edit={false} color2={'#ffd700'} value={story.score} />
+    </p>
+
+    <a 
+        target='_blank' 
+        rel='noreferrer'
+        href={story.link} 
+        style={{padding:0}} 
+        className='card-footer-item' 
+        onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
+    >
+        <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
+        <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
+    </a>
+</footer>
+
+
+export const MobileStory = (story: iStoryCard) => <div className='card' style={cardStyle}>
+    <StoryTitle {...story} />
+
+    <div className="card-image">
+        <figure className="image is-4by3">
+            <img 
+                src={`https://cdn-images-1.medium.com/fit/t/800/240/${story.image}`} 
+                alt='Story cover' 
+            />
+        </figure>
+    </div>
+
+    <div className="card-content">
+        <StoryInfo {...story}/>
+
+        <div className='content' style={{color:'whitesmoke', marginTop:'1rem'}}> 
+            { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
+        </div>
+    </div>
+</div>
+
+
 export const Story = (story: iStoryCard) => <div className='card' style={cardStyle}>
-    <header className='card-header' style={headerStyle}>
-        <p className='card-header-title' style={{color:'white', fontSize:'1.25rem'}}> { story.title } </p>
-    </header>
+    <StoryTitle {...story} />
 
     <article className='media' style={{marginBottom:0}}>
         <figure className='media-left' style={{width:'40%', height:256}}>
@@ -35,50 +102,14 @@ export const Story = (story: iStoryCard) => <div className='card' style={cardSty
                     className='subtitle is-5 has-text-white' 
                     style={{fontSize:'1.15rem', marginTop:'0.5rem', marginBottom:'0rem'}}
                 > { story.subtitle } </p>
-
-                <p>
-                    {
-                        story.twitter
-                        ?   <a href={`https://twitter.com/${story.twitter}`} target='_blank' rel='noreferrer'>
-                                <strong style={{color:'lightskyblue', marginRight:8}}> { story.author } </strong>
-                            </a>
-                        :   <strong style={{color:'white', marginRight:8}}> { story.author } </strong>
-                    }
-                    
-                    <small style={{color:'lightgrey', marginRight:16}}> 
-                        { Math.round(story.readingTime) } mins 
-                    </small>
-                    <small style={{color:'grey'}}> 
-                        <i>  {`${new Date().getDate()}/${new Date().getMonth()+1}/${new Date().getFullYear()}`} </i> 
-                    </small>
-                </p>
+                <StoryInfo {...story} />
 
                 <div className='content' style={{color:'whitesmoke', marginTop:'1rem'}}> 
                     { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
                 </div>
             </div>
          </div>
-    </article>    
+    </article>
 
-    <footer className='card-footer' style={{color:'white'}}>
-        <p className='card-footer-item'>
-            <span> Match { story.match }%  </span>
-        </p>
-
-        <p className='card-footer-item' style={{padding:0}}>
-            <ReactStars count={5} size={32} edit={false} color2={'#ffd700'} value={story.score} />
-        </p>
-
-        <a 
-            target='_blank' 
-            rel='noreferrer'
-            href={story.link} 
-            style={{padding:0}} 
-            className='card-footer-item' 
-            onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
-        >
-            <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
-            <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
-        </a>
-    </footer>
+    <StoryFooter {...story}/>
 </div>
