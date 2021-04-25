@@ -106,7 +106,7 @@ export const MobileStory = (story: iStoryCard) => <div className='card' style={c
         <StoryInfo {...story}/>
 
         <div className='content' style={{color:'whitesmoke', marginTop:'1rem'}}> 
-            { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
+            <p> { story.intro.length ? story.intro[0] : story.subtitle } </p> 
         </div>
     </div>
 
