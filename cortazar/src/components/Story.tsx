@@ -17,7 +17,7 @@ const cardStyle = {
 const headerStyle = { backgroundColor: 'rgb(72, 72, 72)', borderTopLeftRadius: 12, borderTopRightRadius: 12 }
 
 
-const StoryTitle = (story: iStoryCard) => {
+const StoryTitle = ({story}: {story:iStoryCard}) => {
     const isMobile = useMediaQuery({ query: storyMediaQuery })
 
     return <header className='card-header' style={headerStyle}>
@@ -38,7 +38,7 @@ const StoryTitle = (story: iStoryCard) => {
     </header>
 }
 
-const StoryInfo = ({ twitter, author, readingTime, published }: iStoryCard) => {
+const StoryInfo = ({ story: { twitter, author, readingTime, published }}: {story:iStoryCard}) => {
     const isMobile = useMediaQuery({ query: storyMediaQuery })
 
     return <p>
@@ -89,8 +89,8 @@ const StoryFooter = ({story}: {story:iStoryCard}) => {
     </footer>
 }
 
-export const MobileStory = (story: iStoryCard) => <div className='card' style={cardStyle}>
-    <StoryTitle {...story} />
+export const MobileStory = ({story}: {story:iStoryCard}) => <div className='card' style={cardStyle}>
+    <StoryTitle story={story} />
 
     <div className="card-image">
         <figure className="image is-16by9">
@@ -103,7 +103,7 @@ export const MobileStory = (story: iStoryCard) => <div className='card' style={c
     </div>
 
     <div className="card-content">
-        <StoryInfo {...story}/>
+        <StoryInfo story={story}/>
 
         <div className='content' style={{color:'whitesmoke', marginTop:'1rem'}}> 
             <p> { story.intro.length ? story.intro[0] : story.subtitle } </p> 
@@ -114,8 +114,8 @@ export const MobileStory = (story: iStoryCard) => <div className='card' style={c
 </div>
 
 
-export const Story = (story: iStoryCard) => <div className='card' style={cardStyle}>
-    <StoryTitle {...story} />
+export const Story = ({story}:{story:iStoryCard}) => <div className='card' style={cardStyle}>
+    <StoryTitle story={story} />
 
     <article className='media' style={{marginBottom:0}}>
         <figure className='media-left' style={{width:'40%', height:256}}>
@@ -132,7 +132,7 @@ export const Story = (story: iStoryCard) => <div className='card' style={cardSty
                     className='subtitle is-5 has-text-white' 
                     style={{fontSize:'1.15rem', marginTop:'0.5rem', marginBottom:'0rem'}}
                 > { story.subtitle } </p>
-                <StoryInfo {...story} />
+                <StoryInfo story={story} />
 
                 <div className='content' style={{color:'whitesmoke', marginTop:'1rem'}}> 
                     { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
