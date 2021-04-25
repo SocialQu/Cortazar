@@ -1,19 +1,18 @@
 # Launch Checklist
 
-
 ## Tests
-* [ ] Search Works
-* [ ] Results and Scores are Ordered.
-* [ ] Filtering and Sorting Tests Pass.
-* [ ] Responsiveness rocks.
-* [ ] DB Connection works.
+* [X] Search Works
+* [X] Results and Scores are Ordered.
+* [X] Filtering and Sorting Tests Pass.
+* [X] Responsiveness rocks.
+* [X] DB Connection works.
 
 
 ## Tasks
-* [ ] Comment out Debugging.
+* [X] Comment out Debugging.
 * [ ] Retrain PCA.
 * [ ] Update PCA File.
-* [ ] Debug Mongo Function. 
+* [X] Debug Mongo Function. 
 * [ ] Create PR & Review Deployment.
 
 
