@@ -92,7 +92,7 @@ export const App = () => {
         ?   <Loading />
 		:   <>
                 <NavBar signIn={initTwitter} goHome={goHome}/>
-                <div className='section' style={{minHeight:'calc(100vh - 180px)'}}>
+                <div className='section' style={{minHeight:'calc(100vh - 180px)', paddingBottom:0}}>
                     {
                         stories && center
                         ?   <Stories stories={stories} search={search}/>
