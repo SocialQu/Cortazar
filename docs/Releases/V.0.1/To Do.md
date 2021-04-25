@@ -15,7 +15,7 @@
 * [X] Arrows Position.
 * [X] Column Width of filters.
 * [X] Story Footer on Mobile.
-* [ ] Story Image on Mobile.
+* [X] Story Image on Mobile.
 * [X] Link on Mobile.
 * [ ] Order of Recommendations.
 * [ ] Deactivate method.
