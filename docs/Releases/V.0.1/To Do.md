@@ -12,11 +12,12 @@
 
 
 ## Stories Grid
-* [ ] Arrows Position.
-* [ ] Column Width of filters.
+* [X] Arrows Position.
+* [X] Column Width of filters.
 * [ ] Story Footer on Mobile.
 * [ ] Story Image on Mobile.
 * [ ] Link on Mobile.
 * [ ] Order of Recommendations.
 * [ ] Deactivate method.
 * [ ] Add topics & tags.
+* [ ] Determine if display search text on mobile.
