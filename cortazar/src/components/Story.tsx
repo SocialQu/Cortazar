@@ -69,9 +69,9 @@ const StoryFooter = ({story}: {story:iStoryCard}) => {
             <span> Match { story.match }%  </span>
         </p>
 
-        <p className='card-footer-item' style={{padding:0, minWidth:160}}>
+        <div className='card-footer-item' style={{padding:0, minWidth:160}}>
             <ReactStars count={5} size={32} edit={false} color2={'#ffd700'} value={story.score} />
-        </p>
+        </div>
 
         {
             !isMobile && <a 
