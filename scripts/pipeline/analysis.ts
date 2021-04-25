@@ -56,7 +56,7 @@ const centerStory = ({ vectors }: iEmbeddedStory): number[] => {
         ...[...Array(5)].map(() => vectors.intro),
         ...[...Array(3)].map(() => vectors.tags),
         ...[...Array(2)].map(() => vectors.topics)
-    ]
+    ].filter((v) => v)
 
     const center = findCenter(arrayedStory)
     return center
@@ -71,8 +71,8 @@ export const centerStories = async({stories, model}: iCenterStories):Promise<iSt
     for (const s of stories) {
         const vectorizedStory = await embedStory(s, model)
         const embeddings = centerStory(vectorizedStory)
-        const center = pca.predict([embeddings], {nComponents:2}).getRow(0)
 
+        const center = pca.predict([embeddings], {nComponents:2}).getRow(0)
         Stories = [...Stories, { ...s, embeddings, center }]
     }
 
