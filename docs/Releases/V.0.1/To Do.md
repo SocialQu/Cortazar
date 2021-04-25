@@ -20,5 +20,5 @@
 * [X] Order of Recommendations.
 * [X] Deactivate method.
 * [ ] Add topics & tags.
-* [ ] Determine if display search text on mobile.
+* [X] Determine if display search text on mobile.
 * [ ] Dark Style Filters and Menu.

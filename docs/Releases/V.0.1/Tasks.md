@@ -27,7 +27,7 @@
 ## Mobile Friendly
 - [X] Mobile Story Card Element.
 - [X] Run & Debug App.
-- [ ] Handle Search Text and Filters on Mobile.
+- [X] Handle Search Text and Filters on Mobile.
 - [X] Landing Site is Responsive.
 - [ ] Test & Release Ops.
 
