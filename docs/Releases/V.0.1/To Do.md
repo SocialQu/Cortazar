@@ -17,7 +17,8 @@
 * [X] Story Footer on Mobile.
 * [X] Story Image on Mobile.
 * [X] Link on Mobile.
-* [ ] Order of Recommendations.
+* [X] Order of Recommendations.
 * [ ] Deactivate method.
 * [ ] Add topics & tags.
 * [ ] Determine if display search text on mobile.
+* [ ] Dark Style Filters and Menu.
