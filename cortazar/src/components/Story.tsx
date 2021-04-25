@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
+import { useMediaQuery } from 'react-responsive'
 import { iStoryCard } from '../types/stories'
+import { storyMediaQuery } from './Grid'
 import ReactStars from 'react-stars'
 import amplitude from 'amplitude-js'
-
 
 const cardStyle = {
     backgroundColor: 'rgb(48, 48, 48)',
@@ -16,51 +17,77 @@ const cardStyle = {
 const headerStyle = { backgroundColor: 'rgb(72, 72, 72)', borderTopLeftRadius: 12, borderTopRightRadius: 12 }
 
 
-const StoryTitle = ({ title }: iStoryCard) => <header className='card-header' style={headerStyle}>
-    <p className='card-header-title' style={{color:'white', fontSize:'1.25rem'}}> { title } </p>
-</header>
+const StoryTitle = (story: iStoryCard) => {
+    const isMobile = useMediaQuery({ query: storyMediaQuery })
 
+    return <header className='card-header' style={headerStyle}>
+        {
+            isMobile
+            ?    <a 
+                    target='_blank' 
+                    rel='noreferrer'
+                    href={story.link} 
+                    style={{padding:0}} 
+                    className='card-footer-item' 
+                    onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
+                >
+                    <p className='card-header-title' style={{color:'lightskyblue', fontSize:'1.25rem'}}> { story.title } </p>
+                </a>
+            :   <p className='card-header-title' style={{color:'white', fontSize:'1.25rem'}}> { story.title } </p>
+        }
+    </header>
+}
 
-const StoryInfo = ({ twitter, author, readingTime, published }: iStoryCard) => <p>
-    {
-        twitter
-        ?   <a href={`https://twitter.com/${twitter}`} target='_blank' rel='noreferrer'>
-                <strong style={{color:'lightskyblue', marginRight:8}}> { author } </strong>
+const StoryInfo = ({ twitter, author, readingTime, published }: iStoryCard) => {
+    const isMobile = useMediaQuery({ query: storyMediaQuery })
+
+    return <p>
+        {
+            twitter
+            ?   <a href={`https://twitter.com/${twitter}`} target='_blank' rel='noreferrer'>
+                    <strong style={{color:'lightskyblue', marginRight:8}}> { author } </strong>
+                </a>
+            :   <strong style={{color:'white', marginRight:8}}> { author } </strong>
+        }
+
+        { isMobile && <br/> }
+
+        <small style={{color:'lightgrey', marginRight:16}}> 
+            { Math.round(readingTime) } mins 
+        </small>
+        <small style={{color:'grey'}}> 
+            <i>  {`${new Date(published).getDate()}/${new Date(published).getMonth()+1}/${new Date(published).getFullYear()}`} </i> 
+        </small>
+    </p>
+}
+
+const StoryFooter = ({story}: {story:iStoryCard}) => {
+    const isMobile = useMediaQuery({ query: storyMediaQuery })
+
+    return <footer className='card-footer' style={{color:'white'}}>
+        <p className='card-footer-item'>
+            <span> Match { story.match }%  </span>
+        </p>
+
+        <p className='card-footer-item' style={{padding:0, minWidth:160}}>
+            <ReactStars count={5} size={32} edit={false} color2={'#ffd700'} value={story.score} />
+        </p>
+
+        {
+            !isMobile && <a 
+                target='_blank' 
+                rel='noreferrer'
+                href={story.link} 
+                style={{padding:0}} 
+                className='card-footer-item' 
+                onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
+            >
+                <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
+                <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
             </a>
-        :   <strong style={{color:'white', marginRight:8}}> { author } </strong>
-    }
-
-    <small style={{color:'lightgrey', marginRight:16}}> 
-        { Math.round(readingTime) } mins 
-    </small>
-    <small style={{color:'grey'}}> 
-        <i>  {`${new Date(published).getDate()}/${new Date(published).getMonth()+1}/${new Date(published).getFullYear()}`} </i> 
-    </small>
-</p>
-
-
-const StoryFooter = (story: iStoryCard) => <footer className='card-footer' style={{color:'white'}}>
-    <p className='card-footer-item'>
-        <span> Match { story.match }%  </span>
-    </p>
-
-    <p className='card-footer-item' style={{padding:0}}>
-        <ReactStars count={5} size={32} edit={false} color2={'#ffd700'} value={story.score} />
-    </p>
-
-    <a 
-        target='_blank' 
-        rel='noreferrer'
-        href={story.link} 
-        style={{padding:0}} 
-        className='card-footer-item' 
-        onClick={(() => amplitude.getInstance().logEvent('READ_STORY', story))}
-    >
-        <span style={{marginRight:16, color:'lightskyblue'}}> Read </span>
-        <img src={'/send.png'} style={{height:28}} alt={'Send Icon'}/>
-    </a>
-</footer>
-
+        }
+    </footer>
+}
 
 export const MobileStory = (story: iStoryCard) => <div className='card' style={cardStyle}>
     <StoryTitle {...story} />
@@ -81,6 +108,8 @@ export const MobileStory = (story: iStoryCard) => <div className='card' style={c
             { story.intro.map((p, i) => <p key={i}>{p}</p> )} 
         </div>
     </div>
+
+    <StoryFooter story={story}/>
 </div>
 
 
@@ -111,5 +140,5 @@ export const Story = (story: iStoryCard) => <div className='card' style={cardSty
          </div>
     </article>
 
-    <StoryFooter {...story}/>
+    <StoryFooter story={story}/>
 </div>
