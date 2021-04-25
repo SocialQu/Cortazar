@@ -19,7 +19,7 @@ const Row = ({ story }: { story: iStoryCard }) => {
 
 
 export const Stories = ({ stories, search }: { stories:iStoryCard[], search:string }) => {
-    const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' })
+    const isDesktop = useMediaQuery({ query: '(min-width: 1216px)' })
 
     const [ storyCards, setStoryCards ] = useState<iStoryCard[]>([])
     const [ deactivate, setDeactivate ] = useState(false)
