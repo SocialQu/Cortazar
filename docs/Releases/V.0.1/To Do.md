@@ -18,7 +18,7 @@
 * [X] Story Image on Mobile.
 * [X] Link on Mobile.
 * [X] Order of Recommendations.
-* [ ] Deactivate method.
+* [X] Deactivate method.
 * [ ] Add topics & tags.
 * [ ] Determine if display search text on mobile.
 * [ ] Dark Style Filters and Menu.
