@@ -31,7 +31,6 @@ const computeMaxScore = (stories:iStory[]) => {
 }
 
 
-interface iMapStars { score:number, [score:string]:number}
 const getStars = (stories:iStoryCard[]):iStoryCard[] => {
     const scores = stories.map(({ score }) => score).sort((a, b) => a > b ? -1 : 1)
 
