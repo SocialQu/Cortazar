@@ -29,10 +29,13 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
     }
 
     return <div className='container'> 
-        <h1 className='subtitle has-text-light'> 
-            Showing search results for: 
-            <i style={{color:'lightskyblue'}}> "{ search }" </i>
-        </h1>
+        {   
+            isDesktop && 
+            <h1 className='subtitle has-text-light'> 
+                Showing search results for: 
+                <i style={{color:'lightskyblue'}}> "{ search }" </i>
+            </h1>
+        }
 
         { isDesktop && <StoryFilters topics={[]} tags={[]} filterStories={handleFilters}/> }
         { storyCards.filter((_, i) => i < 10).map((story, i) => <Row story={story} key={i}/>) }
