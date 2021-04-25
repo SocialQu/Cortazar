@@ -12,7 +12,7 @@ const Row = ({ story }: { story: iStoryCard }) => {
 
     return <div className='columns'>
         <div className='column'> 
-            { !isMobile ? <Story {...story}/> : <MobileStory {...story}/>} 
+            { !isMobile ? <Story story={story}/> : <MobileStory story={story}/>} 
         </div>
     </div>
 }
