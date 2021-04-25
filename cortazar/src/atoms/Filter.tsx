@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 
-const path = 'M0 0 L10 13 L20 0'
-const pathStyle = {stroke: '#2994D1', fill: 'transparent', strokeWidth: 1 }
+const path = 'M0 0 L5 6 L10 0'
+const pathStyle = {stroke:'#363636', fill:'transparent', strokeWidth:2 }
 
 interface iFilter { name:string, isActive:boolean, setActive():void, filters:string[], select(filter:string):void }
 export const Filter = ({name, isActive, setActive, filters, select}: iFilter) => <div className={`dropdown ${isActive ? 'is-active' : ''}`}>
     <div className='dropdown-trigger'>
-        <button className='button' aria-haspopup='true' aria-controls='dropdown-menu' onClick={setActive}>
+        <button className='button' aria-haspopup='true' aria-controls='dropdown-menu' onClick={setActive} style={{width:180}}>
             <span> { name } </span>
-            <svg className='arrows'>
+            <svg style={{height:24, marginLeft:'auto', width:10, paddingTop:9}}>
                 <path className='a1' d={path} style={pathStyle}></path>
             </svg>
         </button>
