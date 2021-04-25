@@ -93,9 +93,10 @@ export const MobileStory = (story: iStoryCard) => <div className='card' style={c
     <StoryTitle {...story} />
 
     <div className="card-image">
-        <figure className="image is-4by3">
+        <figure className="image is-16by9">
             <img 
                 src={`https://cdn-images-1.medium.com/fit/t/800/240/${story.image}`} 
+                style={{objectFit:'cover'}}
                 alt='Story cover' 
             />
         </figure>
