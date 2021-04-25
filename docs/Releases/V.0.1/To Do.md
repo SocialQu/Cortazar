@@ -5,6 +5,7 @@
 * [ ] Support multiple filters and concurrent sorting on stories.
 * [ ] Handle Double Click on Sorting Filter.
 * [ ] Filter information like tags, and claps are accesible to the user.
+* [ ] Indicate number of avaliable of s
 
 
 ## Story Data Types
@@ -19,6 +20,6 @@
 * [X] Link on Mobile.
 * [X] Order of Recommendations.
 * [X] Deactivate method.
-* [ ] Add topics & tags.
+* [X] Add topics & tags.
 * [X] Determine if display search text on mobile.
-* [ ] Dark Style Filters and Menu.
+* [X] Dark Style Filters and Menu.
