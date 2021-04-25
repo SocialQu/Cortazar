@@ -32,7 +32,7 @@ const recommend = async(tweet: string) => {
     const Stories = client.db("Cortazar").collection("stories")
 
     const geoNear = { $geoNear: { near:center, distanceField:'distance', }}
-    const limit = { $limit: 10 }
+    const limit = { $limit: 100 }
     const stories: iStory[] = await Stories.aggregate([geoNear, limit]).toArray()
 
     const recommendations = stories.sort(({embeddings:a}, {embeddings:b}) => 
