@@ -21,9 +21,10 @@ const ratingFilters = (item:string, stories:iStoryCard[]) => {
 
 
 const sortStories = (item:string, stories:iStoryCard[]) => {
-    if(item === 'By Rating') return stories.sort(({score:a}, {score:b})=> a > b ? 1 : -1)
-    if(item === 'By Publish Date') return stories.sort(({published:a}, {published:b})=> a > b ? 1 : -1)
-    return stories.sort(({match:a}, {match:b})=> a > b ? 1 : -1)
+    const newStories = [...stories]
+    if(item === 'By Rating') return newStories.sort(({score:a}, {score:b})=> a > b ? -1 : 1)
+    if(item === 'By Publish Date') return newStories.sort(({published:a}, {published:b})=> a > b ? -1 : 1)
+    return newStories.sort(({match:a}, {match:b})=> a > b ? -1 : 1)
 }
 
 export const filterStories = (filter:Filters, item:string, stories:iStoryCard[]) => {
