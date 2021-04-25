@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Filter } from '../atoms/Filter'
 
-const readingTimeFilters = ['Short (< 5 minutes)', 'Medium (5 - 10 minutes)', 'Long (> 10 minutes)']
+const readingTimeFilters = ['Short (< 5 mins)', 'Medium (5 - 10 mins)', 'Long (> 10 mins)']
 const ratingFilters = ['3+ Stars', '4+ Stars']
 const sortFilters = ['By Match', 'By Rating', 'By Publish Date']
 
@@ -13,24 +13,43 @@ interface iFilters {
 }
 
 
-export const StoryFilters = ({topics, tags, filterStories}: iFilters) => <div className='columns'>
-    <div className='column'>
-        <Filter name={'Topics'} filters={topics} select={topic => filterStories('Topics', topic)} />
-    </div>
+export const StoryFilters = ({topics, tags, filterStories}: iFilters) => {
+    const [filterNames, setNames] = useState({
+        Topics: 'Topics',
+        Tags: 'Tags',
+        Rating: 'Rating',
+        'Reading Time': 'Reading Time',
+        Sort: 'Sort'
+    })
 
-    <div className='column'>
-        <Filter name={'Tags'} filters={tags} select={tag => filterStories('Tags', tag)} />
-    </div>
+    const handleFilters = (filter:Filters, item:string) => {
+        filterStories(filter, item)
+        setNames({...filterNames, [filter]: item})
+    }
 
-    <div className='column'>
-        <Filter name={'Rating'} filters={ratingFilters} select={rating => filterStories('Rating', rating)} />
-    </div>
+    return <div className='columns'>
+        <div className='column'>
+            <Filter name={filterNames.Topics} filters={topics} select={topic => handleFilters('Topics', topic)} />
+        </div>
 
-    <div className='column'>
-        <Filter name={'Reading Time'} filters={readingTimeFilters} select={time => filterStories('Reading Time', time)} />
-    </div>
+        <div className='column'>
+            <Filter name={filterNames.Tags} filters={tags} select={tag => handleFilters('Tags', tag)} />
+        </div>
 
-    <div className='column'>
-        <Filter name={'Sort'} filters={sortFilters} select={sorting => filterStories('Sort', sorting)}/>
+        <div className='column'>
+            <Filter name={'Rating'} filters={ratingFilters} select={rating => handleFilters('Rating', rating)} />
+        </div>
+
+        <div className='column'>
+            <Filter 
+                name={filterNames['Reading Time']} 
+                filters={readingTimeFilters} 
+                select={time => handleFilters('Reading Time', time)} 
+            />
+        </div>
+
+        <div className='column'>
+            <Filter name={filterNames['Sort']} filters={sortFilters} select={sorting => handleFilters('Sort', sorting)}/>
+        </div>
     </div>
-</div>
+}
