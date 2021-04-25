@@ -20,8 +20,8 @@
 
 ## Tests 
 
-* [ ] Styling is good, filters are hidden in mobile.
-* [ ] The first four filters work, results are checked using React Dev Tools.
-* [ ] The unfiltered version is also congruent, at initial useEffect.
+* [X] Styling is good, filters are hidden in mobile.
+* [X] The first four filters work, results are checked using React Dev Tools.
+* [X] The unfiltered version is also congruent, at initial useEffect.
 * [ ] Sorting works, and understand if the original stories component is modified as a result.
-* [ ] The hide filters click listener works when clicking on the Grid.
+* [X] The hide filters click listener works when clicking on the Grid.
