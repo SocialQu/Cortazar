@@ -6,5 +6,19 @@
 * [ ] Handle Double Click on Sorting Filter.
 * [ ] Filter information like tags, and claps are accesible to the user.
 
+
 ## Story Data Types
 * [ ] Add retrieve/created data attribute for analysis.
+
+
+## Stories Grid
+* [X] Arrows Position.
+* [X] Column Width of filters.
+* [X] Story Footer on Mobile.
+* [X] Story Image on Mobile.
+* [X] Link on Mobile.
+* [X] Order of Recommendations.
+* [ ] Deactivate method.
+* [ ] Add topics & tags.
+* [ ] Determine if display search text on mobile.
+* [ ] Dark Style Filters and Menu.

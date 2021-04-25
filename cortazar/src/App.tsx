@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react'
 import amplitude from 'amplitude-js'
 
 
+
 import { iStory, iStoryCard } from './types/stories'
 import { analyzeTweets } from './scripts/analysis'
 import { recommend } from './scripts/recommend'
+import debugStories from './data/stories.json'
 
 import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
@@ -53,19 +55,20 @@ export const App = () => {
     const demo = async(tweet:string):Promise<void> => {
         setSearch(tweet)
         setLoading(true)
-        amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
+        if(!DEBUG) amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
 
         const { vector, center } = await analyzeTweets([tweet])
         setCenter(center)
 
-        if(!user){
+        if(!user && !DEBUG){
             await sleep(3)
             return demo(tweet)
         }
 
-        const stories:iStory[] = await user.functions.recommend(center)
+        const stories:iStory[] = user ? await user.functions.recommend(center) : debugStories
         const recommendations = recommend(stories, vector)
         setStories(recommendations)
+        setLoading(false)
     }
 
     const initTwitter = async() => {
@@ -89,7 +92,7 @@ export const App = () => {
         ?   <Loading />
 		:   <>
                 <NavBar signIn={initTwitter} goHome={goHome}/>
-                <div className='section' style={{padding:'1.5rem', minHeight:'calc(100vh - 180px)'}}>
+                <div className='section' style={{minHeight:'calc(100vh - 180px)'}}>
                     {
                         stories && center
                         ?   <Stories stories={stories} search={search}/>

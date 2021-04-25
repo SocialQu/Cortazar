@@ -1,18 +1,26 @@
+import { Filters, StoryFilters } from '../molecules/Filters'
 import { filterStories } from '../scripts/filters'
-import { Filters } from '../molecules/Filters'
+import { useMediaQuery } from 'react-responsive'
 import { iStoryCard } from '../types/stories'
+import { Story, MobileStory } from './Story'
+
 import { useEffect, useState } from 'react'
-import { Story } from './Story'
 
+export const storyMediaQuery = '(max-width: 768px)'
+const Row = ({ story }: { story: iStoryCard }) => {
+    const isMobile = useMediaQuery({ query: storyMediaQuery })
 
-const Row = ({ story }: { story: iStoryCard }) => <div className='columns'>
-    <div className='column'> 
-        <Story {...story}/> 
+    return <div className='columns'>
+        <div className='column'> 
+            { !isMobile ? <Story {...story}/> : <MobileStory {...story}/>} 
+        </div>
     </div>
-</div>
+}
 
 
 export const Stories = ({ stories, search }: { stories:iStoryCard[], search:string }) => {
+    const isDesktop = useMediaQuery({ query: '(min-width: 1216px)' })
+
     const [ storyCards, setStoryCards ] = useState<iStoryCard[]>([])
     const [ deactivate, setDeactivate ] = useState(false)
 
@@ -36,7 +44,7 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
         </h1>
 
-        <Filters topics={[]} tags={[]} deactivate={deactivate} filterStories={handleFilters}/>
+        { isDesktop && <StoryFilters topics={[]} tags={[]} deactivate={deactivate} filterStories={handleFilters}/> }
         { storyCards.filter((_, i) => i < 10).map((story, i) => <Row story={story} key={i}/>) }
     </div>
 }

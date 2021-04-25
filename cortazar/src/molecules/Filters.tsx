@@ -14,7 +14,7 @@ interface iFilters {
 }
 
 
-export const Filters = ({topics, tags, deactivate, filterStories}: iFilters) => {
+export const StoryFilters = ({topics, tags, deactivate, filterStories}: iFilters) => {
     const [active, setActive] = useState<Filters>()
     useEffect(() => { setActive(undefined) }, [deactivate])
 

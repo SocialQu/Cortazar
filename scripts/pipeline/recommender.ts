@@ -1,12 +1,12 @@
 // npx ts-node pipeline/recommender
 
 import * as use from '@tensorflow-models/universal-sentence-encoder'
-import PCA_Model from '../../cortazar/src/scripts/pca.json'
 import { iStory } from '../../cortazar/src/types/stories'
+import PCA_Model from '../../cortazar/src/data/pca.json'
 import { PCA, IPCAModel } from 'ml-pca'
 import { vectorize } from './analysis'
 import { MongoClient } from 'mongodb'
-
+import { promises as fs } from 'fs'
 
 require('dotenv').config()
 const uri = `mongodb+srv://${process.env.mongo_admin}/${process.env.cortazar_db}`
@@ -32,7 +32,7 @@ const recommend = async(tweet: string) => {
     const Stories = client.db("Cortazar").collection("stories")
 
     const geoNear = { $geoNear: { near:center, distanceField:'distance', }}
-    const limit = { $limit: 10 }
+    const limit = { $limit: 100 }
     const stories: iStory[] = await Stories.aggregate([geoNear, limit]).toArray()
 
     const recommendations = stories.sort(({embeddings:a}, {embeddings:b}) => 
@@ -40,6 +40,8 @@ const recommend = async(tweet: string) => {
     )
 
     await client.close()
+
+    await fs.writeFile('../cortazar/src/data/stories.json', JSON.stringify(recommendations))
     return recommendations
 }
 
