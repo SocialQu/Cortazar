@@ -1,14 +1,14 @@
+import { Filters, StoryFilters } from '../molecules/Filters'
 import { filterStories } from '../scripts/filters'
 import { useMediaQuery } from 'react-responsive'
-import { Filters } from '../molecules/Filters'
 import { iStoryCard } from '../types/stories'
 import { Story, MobileStory } from './Story'
 
 import { useEffect, useState } from 'react'
 
-
+export const storyMediaQuery = '(max-width: 768px)'
 const Row = ({ story }: { story: iStoryCard }) => {
-    const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+    const isMobile = useMediaQuery({ query: storyMediaQuery })
 
     return <div className='columns'>
         <div className='column'> 
@@ -44,7 +44,7 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
             <i style={{color:'lightskyblue'}}> "{ search }" </i>
         </h1>
 
-        { isDesktop && <Filters topics={[]} tags={[]} deactivate={deactivate} filterStories={handleFilters}/> }
+        { isDesktop && <StoryFilters topics={[]} tags={[]} deactivate={deactivate} filterStories={handleFilters}/> }
         { storyCards.filter((_, i) => i < 10).map((story, i) => <Row story={story} key={i}/>) }
     </div>
 }
