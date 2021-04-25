@@ -13,14 +13,9 @@ interface iFilters {
 }
 
 
+const filterNames = { Topics:'Topics', Tags:'Tags', Rating:'Rating', 'Reading Time':'Reading Time', Sort:'Sort' }
 export const StoryFilters = ({topics, tags, filterStories}: iFilters) => {
-    const [filterNames, setNames] = useState({
-        Topics: 'Topics',
-        Tags: 'Tags',
-        Rating: 'Rating',
-        'Reading Time': 'Reading Time',
-        Sort: 'Sort'
-    })
+    const [names, setNames] = useState(filterNames)
 
     const handleFilters = (filter:Filters, item:string) => {
         filterStories(filter, item)
@@ -29,27 +24,27 @@ export const StoryFilters = ({topics, tags, filterStories}: iFilters) => {
 
     return <div className='columns'>
         <div className='column'>
-            <Filter name={filterNames.Topics} filters={topics} select={topic => handleFilters('Topics', topic)} />
+            <Filter name={names.Topics} filters={topics} select={topic => handleFilters('Topics', topic)} />
         </div>
 
         <div className='column'>
-            <Filter name={filterNames.Tags} filters={tags} select={tag => handleFilters('Tags', tag)} />
+            <Filter name={names.Tags} filters={tags} select={tag => handleFilters('Tags', tag)} />
         </div>
 
         <div className='column'>
-            <Filter name={'Rating'} filters={ratingFilters} select={rating => handleFilters('Rating', rating)} />
+            <Filter name={names.Rating} filters={ratingFilters} select={rating => handleFilters('Rating', rating)} />
         </div>
 
         <div className='column'>
             <Filter 
-                name={filterNames['Reading Time']} 
+                name={names['Reading Time']} 
                 filters={readingTimeFilters} 
                 select={time => handleFilters('Reading Time', time)} 
             />
         </div>
 
         <div className='column'>
-            <Filter name={filterNames['Sort']} filters={sortFilters} select={sorting => handleFilters('Sort', sorting)}/>
+            <Filter name={names.Sort} filters={sortFilters} select={sorting => handleFilters('Sort', sorting)}/>
         </div>
     </div>
 }
