@@ -18,6 +18,14 @@ const Row = ({ story }: { story: iStoryCard }) => {
 }
 
 
+const enlistFilters = (filters:string[]) => {
+    const countFilters = filters.reduce((d, i) => d[i] ? {...d, [i]:d[i] + 1} : {...d, [i]:1}, {} as {[filter:string]:number})
+    const mapFilters = Object.entries(countFilters).map(([filter, value]) => ({filter, value}))
+    const sortedFilters = mapFilters.sort(({value: a}, {value:b})=> a > b ? -1 : 1)
+    const topFive = sortedFilters.filter((_, i) => i < 5)
+    return topFive.map(({ filter }) => filter)
+}
+
 export const Stories = ({ stories, search }: { stories:iStoryCard[], search:string }) => {
     const isDesktop = useMediaQuery({ query: '(min-width: 1216px)' })
     const [ storyCards, setStoryCards ] = useState<iStoryCard[]>([])
@@ -37,7 +45,15 @@ export const Stories = ({ stories, search }: { stories:iStoryCard[], search:stri
             </h1>
         }
 
-        { isDesktop && <StoryFilters topics={[]} tags={[]} filterStories={handleFilters}/> }
+        { 
+            isDesktop && 
+            <StoryFilters 
+                topics={ enlistFilters(stories.reduce((d, { topics }) => [...d, ...topics], [] as string[])) }
+                tags={ enlistFilters(stories.reduce((d, { tags }) => [...d, ...tags], [] as string[])) } 
+                filterStories={handleFilters}
+            /> 
+        }
+
         { storyCards.filter((_, i) => i < 10).map((story, i) => <Row story={story} key={i}/>) }
     </div>
 }
