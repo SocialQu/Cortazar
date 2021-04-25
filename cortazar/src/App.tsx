@@ -2,12 +2,10 @@ import { App as RealmApp, User, Credentials } from 'realm-web'
 import { useState, useEffect } from 'react'
 import amplitude from 'amplitude-js'
 
-
-
 import { iStory, iStoryCard } from './types/stories'
 import { analyzeTweets } from './scripts/analysis'
 import { recommend } from './scripts/recommend'
-import debugStories from './data/stories.json'
+// import debugStories from './data/stories.json'
 
 import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
@@ -32,7 +30,7 @@ const connectMongo = async() => {
 const sleep = (secs:number) => new Promise(resolve => setTimeout(resolve, secs))
 
 
-const DEBUG = process.env.REACT_APP_DEBUG
+// const DEBUG = JSON.parse(process.env.REACT_APP_DEBUG as string)
 export const App = () => {
     const [ user, setUser ] = useState<User>()
     const [ loading, setLoading ] = useState(false)
@@ -43,7 +41,7 @@ export const App = () => {
 
 
     useEffect(() => {
-        if (DEBUG) return
+        // if(DEBUG) return
 
         connectMongo().then(user => setUser(user))
 
@@ -55,17 +53,21 @@ export const App = () => {
     const demo = async(tweet:string):Promise<void> => {
         setSearch(tweet)
         setLoading(true)
-        if(!DEBUG) amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
+        // if(!DEBUG) 
+
+        amplitude.getInstance().logEvent('RECOMMEND_STORIES', { tweet })
 
         const { vector, center } = await analyzeTweets([tweet])
         setCenter(center)
 
-        if(!user && !DEBUG){
+        if(!user){
             await sleep(3)
             return demo(tweet)
         }
 
-        const stories:iStory[] = user ? await user.functions.recommend(center) : debugStories
+        // const stories:iStory[] = user ? await user.functions.recommend(center) : debugStories
+        const stories:iStory[] = await user.functions.cortazarRecommend(center)
+
         const recommendations = recommend(stories, vector)
         setStories(recommendations)
         setLoading(false)
@@ -77,7 +79,6 @@ export const App = () => {
 
         const user = await connectMongo()
         setUser(user)
-        console.log('user', user)
 
         const oauthToken = await user.functions.requestAccess()	
         window.open(`${authURL}=${oauthToken}`, '_self')
