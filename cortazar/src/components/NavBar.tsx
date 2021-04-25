@@ -9,6 +9,7 @@ const TwitterButton = ({signIn}:{signIn():void}) => <a style={{ height: 28}} onC
 
 
 const GumRoad = ({ isActive=false }: { isActive? : boolean }) => <a 
+    style = {{color:'white'}}
     className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}
     href='https://gumroad.com/l/cortazar' 
     rel='noopener noreferrer'
@@ -42,12 +43,15 @@ export const NavBar = ({ signIn, goHome }: iNavBar) => {
                 </a>
             </div>
 
-            <div className={`navbar-menu ${isActive ? 'is-active navbar-menu-active': ''}`} style={{ maxWidth:1200, marginRight:'auto' }}>
+            <div 
+                className={`navbar-menu ${isActive ? 'is-active navbar-menu-active': ''}`} 
+                style={{ maxWidth:1200, marginRight:'auto', background:'#0A0A0A' }}
+            >
                 <div className={`navbar-end ${isActive ? 'navbar-end-active': ''}`} style={{fontSize: '1.2em'}}>
                     <GumRoad isActive={isActive}/> 
                 </div>
 
-                <div className={`navbar-item ${isActive ? 'navbar-item-active': ''}`}>
+                <div className={`navbar-item ${isActive ? 'navbar-item-active': ''}`} style={{display:'none'}}>
                     <TwitterButton signIn={signIn}/>
                 </div>
             </div>
