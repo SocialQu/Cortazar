@@ -6,9 +6,9 @@ const topicFilters = (item:string, stories:iStoryCard[]) => stories.filter(({ to
 const tagFilters = (item:string, stories:iStoryCard[]) => stories.filter(({ tags }) => tags.includes(item))
 
 const readingTimeFilters = (item:string, stories:iStoryCard[]) => {
-    if (item === 'Short (< 5 minutes)') return stories.filter(({ readingTime }) => readingTime < 5)
-    if (item === 'Medium (5 - 10 minutes)') return stories.filter(({ readingTime }) => readingTime > 5 && readingTime < 10)
-    if (item === 'Long (> 10 minutes)') return stories.filter(({ readingTime }) => readingTime > 10)
+    if (item === 'Short (< 5 mins)') return stories.filter(({ readingTime }) => readingTime < 5)
+    if (item === 'Medium (5 - 10 mins)') return stories.filter(({ readingTime }) => readingTime > 5 && readingTime < 10)
+    if (item === 'Long (> 10 mins)') return stories.filter(({ readingTime }) => readingTime > 10)
     return stories
 }
 
