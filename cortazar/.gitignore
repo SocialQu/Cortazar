@@ -24,3 +24,4 @@ yarn-error.log*
 
 # local data
 src/data/tweets.json
+src/data/stories.json
